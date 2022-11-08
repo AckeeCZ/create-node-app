@@ -1,12 +1,7 @@
-import Framework from './Framework'
+import Toolbelt from './Toolbelt'
 
 export default interface Starter {
   readonly name: string
-  install(param: {
-    destination: Path
-    framework: Framework
-    npm: Npm
-    packageJson: PackageJson
-    asset: (path: Path) => Path
-  }): void
+  setToolbelt(toolbelt: Toolbelt): Starter
+  install(): void
 }
