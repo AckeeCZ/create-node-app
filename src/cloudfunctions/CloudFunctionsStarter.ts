@@ -21,9 +21,24 @@ export default class CloudFunctionsStarter implements Starter {
     })
     tb.copyAsset('.dockerignore', tb.destination)
     tb.copyAsset('.gitignore', tb.destination)
+    tb.copyAsset('.gitlab-ci.yml', tb.destination)
     tb.copyAsset('.nvmrc', tb.destination)
     tb.copyAsset('Dockerfile', tb.destination)
     tb.copyAsset('firebase.json', tb.destination)
+
+    tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
+    tb.copyAsset(
+      'ci-branch-config/common.env',
+      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+    )
+    tb.copyAsset(
+      'ci-branch-config/development.env',
+      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+    )
+    tb.copyAsset(
+      'ci-branch-config/master.env',
+      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+    )
 
     tb.npm.i('firebase-admin')
     tb.npm.i('firebase-functions')
@@ -48,6 +63,8 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.iDev('@types/node')
     tb.copyAsset('tsconfig.json', tb.destination)
     tb.packageJson.addNpmScript('build', 'tsc')
+    // TODO: For Gitlab CI pipeline purpose - preferably refactor pipeline cfg to use `build` only
+    tb.packageJson.addNpmScript('build:dev', 'tsc')
     tb.packageJson.addNpmScript(
       'build:watch',
       'tsc --watch'
