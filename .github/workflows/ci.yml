@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  create-projects:
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [16]
+        # TODO: update once cloud run project ready
+        create-app-command: ["create-node-app cloudfunctions", "echo TODO"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm i --ignore-scripts
+
+      - name: Build the project
+        run: npm run build
+      
+      - name: Run npm link
+        run: npm link
+
+      - name: Create project
+        run: ${{ matrix.create-app-command }}
+      
+      # - name: Build created project
+      #   working-directory: ./node-app
+      #   run: npm run build
