@@ -1,4 +1,4 @@
-name: CI
+name: create-projects
 
 on:
   push:
@@ -9,29 +9,34 @@ on:
       - main
 
 jobs:
+  build:
+    uses: AckeeCZ/create-node-app/.github/workflows/build.yml@main
+
   create-projects:
+    needs: "build"
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16]
-        # TODO: update once cloud run project ready
         create-app-command: ["create-node-app cloudfunctions", "echo TODO"]
     runs-on: ubuntu-latest
-    steps:
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
 
-      - name: Check out code
+    steps:
+      - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
       - name: Install dependencies
-        run: npm i --ignore-scripts
+        run: npm ci --ignore-scripts
 
       - name: Build the project
         run: npm run build
-      
+
       - name: Run npm link
         run: npm link
 
