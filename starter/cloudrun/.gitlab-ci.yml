@@ -1,0 +1,5 @@
+include:
+  - project: Ackee/gitlab-ci-templates
+    ref: nodejs-cloudrun/v3.11.2
+    file: nodejs-cloudrun/pipeline.yml
+
