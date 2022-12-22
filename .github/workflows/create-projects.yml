@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        create-app-command: ["create-node-app cloudfunctions", "echo TODO"]
+        create-app-command: ["create-node-app cloudfunctions", "create-node-app cloudrun"]
     runs-on: ubuntu-latest
 
     steps:
@@ -43,6 +43,6 @@ jobs:
       - name: Create project
         run: ${{ matrix.create-app-command }}
       
-      # - name: Build created project
-      #   working-directory: ./node-app
-      #   run: npm run build
+      - name: Build created project
+        working-directory: ./node-app
+        run: npm run build
