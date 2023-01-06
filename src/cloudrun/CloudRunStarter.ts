@@ -22,41 +22,41 @@ export default class CloudRunStarter implements Starter {
     tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
     tb.copyAsset(
       'ci-branch-config/common.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
     tb.copyAsset(
       'ci-branch-config/development.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
     tb.copyAsset(
       'ci-branch-config/stage.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
     tb.copyAsset(
       'ci-branch-config/master.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/docker-compose`))
     tb.copyAsset(
       'docker-compose/docker-compose-entrypoint.sh',
-      tb.stringToPath(`${tb.destination}/docker-compose`)
+      `${tb.destination}/docker-compose`
     )
     tb.copyAsset(
       'docker-compose/docker-compose.ci.yml',
-      tb.stringToPath(`${tb.destination}/docker-compose`)
+      `${tb.destination}/docker-compose`
     )
     tb.copyAsset(
       'docker-compose/docker-compose.local.yml',
-      tb.stringToPath(`${tb.destination}/docker-compose`)
+      `${tb.destination}/docker-compose`
     )
     tb.copyAsset(
       'docker-compose/docker-compose.override.yml',
-      tb.stringToPath(`${tb.destination}/docker-compose`)
+      `${tb.destination}/docker-compose`
     )
     tb.copyAsset(
       'docker-compose/docker-compose.yml',
-      tb.stringToPath(`${tb.destination}/docker-compose`)
+      `${tb.destination}/docker-compose`
     )
 
     tb.npm.iDev('typescript')
@@ -73,9 +73,9 @@ export default class CloudRunStarter implements Starter {
     tb.npm.i('cosmas')
     tb.copyAsset('.env.jsonc', tb.destination)
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
-    tb.copyAsset('src/config.ts', tb.stringToPath(`${tb.destination}/src`))
-    tb.copyAsset('src/logger.ts', tb.stringToPath(`${tb.destination}/src`))
-    tb.copyAsset('src/index.ts', tb.stringToPath(`${tb.destination}/src`))
+    tb.copyAsset('src/config.ts', `${tb.destination}/src`)
+    tb.copyAsset('src/logger.ts', `${tb.destination}/src`)
+    tb.copyAsset('src/index.ts', `${tb.destination}/src`)
 
     tb.npm.iDev('jest')
     tb.npm.iDev('@types/jest')
@@ -88,10 +88,7 @@ export default class CloudRunStarter implements Starter {
       'npm run test -- --collectCoverage --reporters=default --reporters=jest-junit --ci'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
-    tb.copyAsset(
-      'src/test/helloWorld.test.ts',
-      tb.stringToPath(`${tb.destination}/src/test`)
-    )
+    tb.copyAsset('src/test/helloWorld.test.ts', `${tb.destination}/src/test`)
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
@@ -111,10 +108,9 @@ export default class CloudRunStarter implements Starter {
       'npm run lint -- -f checkstyle -o ./output/checkstyle-result.xml'
     )
 
-    // TODO: these 2 add to the end of starter?
     tb.packageJson.runScript('build')
     tb.packageJson.runScript('start')
-    // TODO: these 2 add to the end of starter?
+
     tb.packageJson.runScript('test')
     tb.packageJson.runScript('ci-test')
 

@@ -29,15 +29,15 @@ export default class CloudFunctionsStarter implements Starter {
     tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
     tb.copyAsset(
       'ci-branch-config/common.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
     tb.copyAsset(
       'ci-branch-config/development.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
     tb.copyAsset(
       'ci-branch-config/master.env',
-      tb.stringToPath(`${tb.destination}/ci-branch-config`)
+      `${tb.destination}/ci-branch-config`
     )
 
     tb.npm.i('firebase-admin')
@@ -79,10 +79,7 @@ export default class CloudFunctionsStarter implements Starter {
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
-    tb.copyAsset(
-      'src/test/helloWorld.test.ts',
-      tb.stringToPath(`${tb.destination}/src/test`)
-    )
+    tb.copyAsset('src/test/helloWorld.test.ts', `${tb.destination}/src/test`)
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
@@ -102,15 +99,12 @@ export default class CloudFunctionsStarter implements Starter {
       'npm run lint -- -f checkstyle -o ./output/checkstyle-result.xml'
     )
 
-    tb.copyAsset('src/config.ts', tb.stringToPath(`${tb.destination}/src`))
-    tb.copyAsset('src/logger.ts', tb.stringToPath(`${tb.destination}/src`))
-    tb.copyAsset('src/index.ts', tb.stringToPath(`${tb.destination}/src`))
+    tb.copyAsset('src/config.ts', `${tb.destination}/src`)
+    tb.copyAsset('src/logger.ts', `${tb.destination}/src`)
+    tb.copyAsset('src/index.ts', `${tb.destination}/src`)
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/graphql`))
-    tb.copyAsset(
-      'src/graphql/index.ts',
-      tb.stringToPath(`${tb.destination}/src/graphql`)
-    )
+    tb.copyAsset('src/graphql/index.ts', `${tb.destination}/src/graphql`)
 
     tb.packageJson.runScript('build')
     tb.packageJson.runScript('codestyle')
