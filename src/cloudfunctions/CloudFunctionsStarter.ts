@@ -51,24 +51,15 @@ export default class CloudFunctionsStarter implements Starter {
       'npm run build && firebase functions:shell'
     )
     tb.packageJson.addNpmScript('start', 'npm run shell')
-    tb.packageJson.addNpmScript(
-      'deploy',
-      'firebase deploy --only functions'
-    )
-    tb.packageJson.addNpmScript(
-      'logs',
-      'firebase functions:log'
-    )
+    tb.packageJson.addNpmScript('deploy', 'firebase deploy --only functions')
+    tb.packageJson.addNpmScript('logs', 'firebase functions:log')
     tb.npm.iDev('typescript')
     tb.npm.iDev('@types/node')
     tb.copyAsset('tsconfig.json', tb.destination)
     tb.packageJson.addNpmScript('build', 'tsc')
     // TODO: For Gitlab CI pipeline purpose - preferably refactor pipeline cfg to use `build` only
     tb.packageJson.addNpmScript('build:dev', 'tsc')
-    tb.packageJson.addNpmScript(
-      'build:watch',
-      'tsc --watch'
-    )
+    tb.packageJson.addNpmScript('build:watch', 'tsc --watch')
     tb.npm.i('apollo-server-cloud-functions')
     tb.npm.i('graphql')
 
@@ -81,18 +72,13 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.iDev('ts-jest')
     tb.npm.iDev('jest-junit')
     tb.copyAsset('jest.config.js', tb.destination)
-    tb.packageJson.addNpmScript(
-      'test',
-      'jest --colors --detectOpenHandles'
-    )
+    tb.packageJson.addNpmScript('test', 'jest --colors --detectOpenHandles')
     tb.packageJson.addNpmScript(
       'ci-test',
       'npm run test -- --collectCoverage --reporters=default --reporters=jest-junit --ci'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
-    tb.mkdir(
-      tb.stringToPath(`${tb.destination}/src/test`)
-    )
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
     tb.copyAsset(
       'src/test/helloWorld.test.ts',
       tb.stringToPath(`${tb.destination}/src/test`)
@@ -109,35 +95,18 @@ export default class CloudFunctionsStarter implements Starter {
       'prettier',
       "prettier --check --write '**/*.{ts,js,json,md}'"
     )
-    tb.packageJson.addNpmScript(
-      'lint',
-      "eslint '**/*.ts' -f codeframe --fix"
-    )
-    tb.packageJson.addNpmScript(
-      'codestyle',
-      'npm run prettier && npm run lint'
-    )
+    tb.packageJson.addNpmScript('lint', "eslint '**/*.ts' -f codeframe --fix")
+    tb.packageJson.addNpmScript('codestyle', 'npm run prettier && npm run lint')
     tb.packageJson.addNpmScript(
       'ci-lint',
       'npm run lint -- -f checkstyle -o ./output/checkstyle-result.xml'
     )
 
-    tb.copyAsset(
-      'src/config.ts',
-      tb.stringToPath(`${tb.destination}/src`)
-    )
-    tb.copyAsset(
-      'src/logger.ts',
-      tb.stringToPath(`${tb.destination}/src`)
-    )
-    tb.copyAsset(
-      'src/index.ts',
-      tb.stringToPath(`${tb.destination}/src`)
-    )
+    tb.copyAsset('src/config.ts', tb.stringToPath(`${tb.destination}/src`))
+    tb.copyAsset('src/logger.ts', tb.stringToPath(`${tb.destination}/src`))
+    tb.copyAsset('src/index.ts', tb.stringToPath(`${tb.destination}/src`))
 
-    tb.mkdir(
-      tb.stringToPath(`${tb.destination}/src/graphql`)
-    )
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/graphql`))
     tb.copyAsset(
       'src/graphql/index.ts',
       tb.stringToPath(`${tb.destination}/src/graphql`)

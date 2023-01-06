@@ -5,14 +5,14 @@ const typeDefs = gql`
   type Query {
     hello: String
   }
-`;
+`
 
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
   },
-};
+}
 
 // Because `NODE_ENV` is a reserved environment variable in Google Cloud
 // Functions and it defaults to "production", you need to set the
@@ -22,6 +22,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-});
+})
 
-export default server.createHandler();
+export default server.createHandler()

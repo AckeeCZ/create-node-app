@@ -63,10 +63,7 @@ export default class CloudRunStarter implements Starter {
     tb.npm.iDev('@types/node')
     tb.npm.i('source-map-support')
     tb.copyAsset('tsconfig.json', tb.destination)
-    tb.packageJson.addNpmScript(
-      'build',
-      'tsc'
-    )
+    tb.packageJson.addNpmScript('build', 'tsc')
     tb.packageJson.addNpmScript(
       'start',
       'node -r source-map-support/register dist/index.js'
@@ -76,35 +73,21 @@ export default class CloudRunStarter implements Starter {
     tb.npm.i('cosmas')
     tb.copyAsset('.env.jsonc', tb.destination)
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
-    tb.copyAsset(
-      'src/config.ts',
-      tb.stringToPath(`${tb.destination}/src`)
-    )
-    tb.copyAsset(
-      'src/logger.ts',
-      tb.stringToPath(`${tb.destination}/src`)
-    )
-    tb.copyAsset(
-      'src/index.ts',
-      tb.stringToPath(`${tb.destination}/src`)
-    )
+    tb.copyAsset('src/config.ts', tb.stringToPath(`${tb.destination}/src`))
+    tb.copyAsset('src/logger.ts', tb.stringToPath(`${tb.destination}/src`))
+    tb.copyAsset('src/index.ts', tb.stringToPath(`${tb.destination}/src`))
 
     tb.npm.iDev('jest')
     tb.npm.iDev('@types/jest')
     tb.npm.iDev('ts-jest')
     tb.npm.iDev('jest-junit')
     tb.copyAsset('jest.config.js', tb.destination)
-    tb.packageJson.addNpmScript(
-      'test',
-      'jest --colors --detectOpenHandles'
-    )
+    tb.packageJson.addNpmScript('test', 'jest --colors --detectOpenHandles')
     tb.packageJson.addNpmScript(
       'ci-test',
       'npm run test -- --collectCoverage --reporters=default --reporters=jest-junit --ci'
     )
-    tb.mkdir(
-      tb.stringToPath(`${tb.destination}/src/test`)
-    )
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
     tb.copyAsset(
       'src/test/helloWorld.test.ts',
       tb.stringToPath(`${tb.destination}/src/test`)
@@ -119,16 +102,10 @@ export default class CloudRunStarter implements Starter {
 
     tb.packageJson.addNpmScript(
       'prettier',
-      'prettier --check --write \'**/*.{ts,js,json,md}\''
+      "prettier --check --write '**/*.{ts,js,json,md}'"
     )
-    tb.packageJson.addNpmScript(
-      'lint',
-      'eslint \'**/*.ts\' -f codeframe --fix'
-    )
-    tb.packageJson.addNpmScript(
-      'codestyle',
-      'npm run prettier && npm run lint'
-    )
+    tb.packageJson.addNpmScript('lint', "eslint '**/*.ts' -f codeframe --fix")
+    tb.packageJson.addNpmScript('codestyle', 'npm run prettier && npm run lint')
     tb.packageJson.addNpmScript(
       'ci-lint',
       'npm run lint -- -f checkstyle -o ./output/checkstyle-result.xml'

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "cs:prettier:check": "prettier --ignore-path .gitignore --check '**/*.{ts,js,json,md}'",
+    "cs:prettier:fix": "npm run cs:prettier:check -- --write '**/*.{ts,js,json,md}'"
   },
   "repository": {
     "type": "git",
@@ -20,9 +22,10 @@
   },
   "homepage": "https://github.com/AckeeCZ/create-node-app#readme",
   "devDependencies": {
-    "@ackee/styleguide-backend-config": "^0.3.2",
+    "@ackee/styleguide-backend-config": "^0.3.11",
     "@types/lodash": "^4.14.188",
     "@types/node": "^18.11.9",
+    "prettier": "^2.8.1",
     "typescript": "^4.8.4"
   },
   "dependencies": {
