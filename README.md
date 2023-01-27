@@ -1,17 +1,25 @@
 # Create Node App
 
-A tool for Node.js projects scaffolding
+CLI to setup Node.js TypeScript project. Set up project includes
+- code style tools (prettier, lint)
+- testing (using jest)
+- infrastructure files of your choice (Docker, Cloud Functions, etc.)
+- GitLab CI and npm ci-* scripts (for Ackee CI/CD pipelines)
 
-## 🚀 Quick-start
+Run directly via npx:
 
-- `npm install`
-- `npm link`
+```
+Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY]
 
-Now you are able to use `create-node-app` executable to scaffold your project with:
+STARTER        Which template to setup
+DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
 
-- [Cloudrun](./starter/cloudrun/README.md)
-- [Cloud functions + GraphQL](./starter/cloudfunctions/README.md)
+Starters available:
+    cloudrun        Cloud Run + express
+    cloudfunctions  Cloud Functions + graphql
+```
 
-## ⚖️ License
+Supported starter templates:
 
-This project is published under [MIT license](./LICENSE.txt).
+- [Cloud Run](./starter/cloudrun/README.md)
+- [Cloud Functions](./starter/cloudfunctions/README.md)
