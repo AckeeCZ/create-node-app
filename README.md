@@ -6,7 +6,7 @@ CLI to setup Node.js TypeScript project. Set up project includes
 - infrastructure files of your choice (Docker, Cloud Functions, etc.)
 - GitLab CI and npm ci-* scripts (for Ackee CI/CD pipelines)
 
-Run directly via npx:
+Run directly from GitHub repo via npx:
 
 ```
 Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY]
