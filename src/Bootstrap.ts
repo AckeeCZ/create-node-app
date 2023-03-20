@@ -59,13 +59,13 @@ export default class Boostrap {
   protected printCLIHelp() {
     this.printLn(`
     Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY]
-    
+
     STARTER        Which template to setup
     DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
     
     Starters available:
         cloudrun        Cloud Run + express
-				cloudfunctions	Cloud Functions + graphql
+        cloudfunctions  Cloud Functions + graphql
     `)
   }
 }

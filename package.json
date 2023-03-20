@@ -15,8 +15,7 @@
   "bin": {
     "create-node-app": "bin/create-node-app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AckeeCZ/create-node-app/issues"
   },
