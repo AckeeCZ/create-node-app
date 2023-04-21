@@ -68,15 +68,15 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.iDev('pino-pretty')
     tb.copyAsset('.env.jsonc', tb.destination)
 
-    tb.npm.iDev('jest')
-    tb.npm.iDev('@types/jest')
-    tb.npm.iDev('ts-jest')
-    tb.npm.iDev('jest-junit')
-    tb.copyAsset('jest.config.js', tb.destination)
-    tb.packageJson.addNpmScript('test', 'jest --colors --detectOpenHandles')
+    tb.npm.iDev('mocha')
+    tb.npm.iDev('ts-mocha')
+    tb.npm.iDev('mocha-junit-reporter')
+    tb.npm.iDev('@types/mocha')
+    tb.copyAsset('.mocharc.json', tb.destination)
+    tb.packageJson.addNpmScript('test', 'ts-mocha')
     tb.packageJson.addNpmScript(
       'ci-test',
-      'npm run test -- --collectCoverage --reporters=default --reporters=jest-junit --ci'
+      'npm run test -- --parallel=false -R mocha-multi --reporter-options spec=-,mocha-junit-reporter=./output/test.xml'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))

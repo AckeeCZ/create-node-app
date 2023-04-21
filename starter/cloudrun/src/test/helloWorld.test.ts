@@ -1,5 +1,7 @@
-describe('Hello World!', () => {
-  test('Hello World!', () => {
-    //
+import assert = require('assert')
+
+describe('Hello world', () => {
+  it('Works', () => {
+    assert(true)
   })
 })
