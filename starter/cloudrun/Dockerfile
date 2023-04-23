@@ -1,5 +1,5 @@
 # BUILDER IMAGE
-FROM node:16.17.1-buster AS builder
+FROM node:18.16.0 AS builder
 ARG NPM_TOKEN
 ENV NODE_PATH=.
 ENV JOBS="max"
@@ -27,10 +27,10 @@ RUN npm ci
 RUN npm run build
 
 # MAIN IMAGE
-FROM node:16.17.1-buster-slim
+FROM node:18.16.0-slim
 
 RUN mkdir -p /usr/share/fonts/truetype/
-RUN echo ls 
+RUN echo ls
 COPY --from=builder /usr/src/app/assets/fonts/Consolas.ttf .
 RUN install -m644 Consolas.ttf /usr/share/fonts/truetype/
 RUN rm ./Consolas.ttf
