@@ -15,7 +15,6 @@ RUN wget -q https://github.com/krallin/tini/releases/download/${TINI_VERSION}/ti
   chmod +x /tini
 
 # important, otherwise postinstall hook fails
-RUN npm set unsafe-perm=true
 RUN npm set progress=false
 RUN npm set loglevel=error
 # copy all relevant files
