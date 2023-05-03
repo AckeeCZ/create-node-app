@@ -28,12 +28,6 @@ RUN npm run build
 # MAIN IMAGE
 FROM node:18.16.0-slim
 
-RUN mkdir -p /usr/share/fonts/truetype/
-RUN echo ls
-COPY --from=builder /usr/src/app/assets/fonts/Consolas.ttf .
-RUN install -m644 Consolas.ttf /usr/share/fonts/truetype/
-RUN rm ./Consolas.ttf
-
 ENV NODE_PATH=dist
 ENV CFG_JSON_PATH="/config/secrets.json"
 WORKDIR /usr/src/app
