@@ -64,7 +64,8 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.i('graphql')
 
     tb.npm.i('configuru')
-    tb.npm.i('cosmas')
+    tb.npm.i('pino')
+    tb.npm.iDev('pino-pretty')
     tb.copyAsset('.env.jsonc', tb.destination)
 
     tb.npm.iDev('jest')

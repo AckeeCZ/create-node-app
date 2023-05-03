@@ -70,7 +70,8 @@ export default class CloudRunStarter implements Starter {
     )
 
     tb.npm.i('configuru')
-    tb.npm.i('cosmas')
+    tb.npm.i('pino')
+    tb.npm.iDev('pino-pretty')
     tb.copyAsset('.env.jsonc', tb.destination)
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
     tb.copyAsset('src/config.ts', `${tb.destination}/src`)
