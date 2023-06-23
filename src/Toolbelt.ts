@@ -40,11 +40,11 @@ export default class Toolbelt {
    * Like cp, but second argument does not need to include file name
    * the name is preserved.
    */
-  public cpFile(a: string, b: string) {
+  public cpFile(a: string, b: string, option?: { destFileName?: string }) {
     a = this.stringToPath(a)
     b = this.stringToPath(b)
     const file = path.basename(a)
-    this.cp(a, this.stringToPath(`${b}/${file}`))
+    this.cp(a, this.stringToPath(`${b}/${option?.destFileName ?? file}`))
   }
 
   public cp(a: string, b: string) {
@@ -53,9 +53,28 @@ export default class Toolbelt {
     logger.info(`> cp ${a} ${b}`)
     fs.copyFileSync(a, b)
   }
-  public copyAsset(name: string, destination: string) {
+  public copyAsset(name: string, destination?: string) {
+    let destinationName = name
+    if (path.basename(name) === '.gitignore') {
+      name = '.gitignore_'
+      destinationName = '.gitignore'
+    }
     name = this.stringToPath(name)
-    destination = this.stringToPath(destination)
-    this.cpFile(`${this.assetDirectory}/${name}`, destination)
+    destination = this.stringToPath(this.destination)
+    this.cpFile(`${this.assetDirectory}/${name}`, destination, { destFileName: destinationName })
+  }
+  public symlink(linkName: string, linkedFile: string) {
+    linkName = this.stringToPath(linkName)
+    linkedFile = this.stringToPath(linkedFile)
+    logger.info(`> ln -s ${linkName} ${linkedFile}`)
+    try {
+      fs.symlinkSync(linkName, linkedFile)
+    } catch (error) {
+      if ('code' in error && error.code === 'EEXIST') {
+        // OK
+      } else {
+        throw error
+      }
+    }
   }
 }

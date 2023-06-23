@@ -10,7 +10,7 @@ CLI to hel you setup Node.js TypeScript project. Set up project includes
 Run directly from GitHub repo via npx:
 
 ```
-Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY]
+Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app STARTER [DIRECTORY]
 
 STARTER        Which template to setup
 DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
