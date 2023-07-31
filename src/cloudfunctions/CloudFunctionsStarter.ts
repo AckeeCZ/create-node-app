@@ -19,26 +19,17 @@ export default class CloudFunctionsStarter implements Starter {
         node: '16',
       },
     })
-    tb.copyAsset('.dockerignore', tb.destination)
-    tb.copyAsset('.gitignore', tb.destination)
-    tb.copyAsset('.gitlab-ci.yml', tb.destination)
-    tb.copyAsset('.nvmrc', tb.destination)
-    tb.copyAsset('Dockerfile', tb.destination)
-    tb.copyAsset('firebase.json', tb.destination)
+    tb.copyAsset('.dockerignore')
+    tb.copyAsset('.gitignore')
+    tb.copyAsset('.gitlab-ci.yml')
+    tb.copyAsset('.nvmrc')
+    tb.copyAsset('Dockerfile')
+    tb.copyAsset('firebase.json')
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
-    tb.copyAsset(
-      'ci-branch-config/common.env',
-      `${tb.destination}/ci-branch-config`
-    )
-    tb.copyAsset(
-      'ci-branch-config/development.env',
-      `${tb.destination}/ci-branch-config`
-    )
-    tb.copyAsset(
-      'ci-branch-config/master.env',
-      `${tb.destination}/ci-branch-config`
-    )
+    tb.copyAsset('ci-branch-config/common.env')
+    tb.copyAsset('ci-branch-config/development.env')
+    tb.copyAsset('ci-branch-config/master.env')
 
     tb.npm.i('firebase-admin')
     tb.npm.i('firebase-functions')
@@ -55,7 +46,7 @@ export default class CloudFunctionsStarter implements Starter {
     tb.packageJson.addNpmScript('logs', 'firebase functions:log')
     tb.npm.iDev('typescript')
     tb.npm.iDev('@types/node')
-    tb.copyAsset('tsconfig.json', tb.destination)
+    tb.copyAsset('tsconfig.json')
     tb.packageJson.addNpmScript('build', 'tsc')
     // TODO: For Gitlab CI pipeline purpose - preferably refactor pipeline cfg to use `build` only
     tb.packageJson.addNpmScript('build:dev', 'tsc')
@@ -66,7 +57,7 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.i('configuru')
     tb.npm.i('pino')
     tb.npm.iDev('pino-pretty')
-    tb.copyAsset('.env.jsonc', tb.destination)
+    tb.copyAsset('.env.jsonc')
 
     tb.npm.iDev('mocha')
     tb.npm.iDev('ts-mocha')
@@ -80,15 +71,14 @@ export default class CloudFunctionsStarter implements Starter {
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
-    tb.copyAsset('src/test/helloWorld.test.ts', `${tb.destination}/src/test`)
+    tb.copyAsset('src/test/helloWorld.test.ts')
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
-    // TODO: pinned version due to https://github.com/eslint/eslint/issues/15149
-    tb.npm.iDev('eslint@7.32.0')
-    tb.copyAsset('.eslint.tsconfig.json', tb.destination)
-    tb.copyAsset('.eslintrc.js', tb.destination)
-    tb.copyAsset('prettier.config.js', tb.destination)
+    tb.npm.iDev('eslint')
+    tb.copyAsset('.eslint.tsconfig.json')
+    tb.copyAsset('.eslintrc.js')
+    tb.copyAsset('prettier.config.js')
     tb.packageJson.addNpmScript(
       'prettier',
       "prettier --check --write '**/*.{ts,js,json,md}'"
@@ -100,12 +90,12 @@ export default class CloudFunctionsStarter implements Starter {
       'npm run lint -- -f checkstyle -o ./output/checkstyle-result.xml'
     )
 
-    tb.copyAsset('src/config.ts', `${tb.destination}/src`)
-    tb.copyAsset('src/logger.ts', `${tb.destination}/src`)
-    tb.copyAsset('src/index.ts', `${tb.destination}/src`)
+    tb.copyAsset('src/config.ts')
+    tb.copyAsset('src/logger.ts')
+    tb.copyAsset('src/index.ts')
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/graphql`))
-    tb.copyAsset('src/graphql/index.ts', `${tb.destination}/src/graphql`)
+    tb.copyAsset('src/graphql/index.ts')
 
     tb.packageJson.runScript('build')
     tb.packageJson.runScript('codestyle')
