@@ -24,6 +24,9 @@ const defaultPinoConf = (defaultLevel: string) => ({
       }
     },
   },
+  serializers: {
+    error: logger.stdSerializers.err,
+  },
 })
 
 export default logger({
