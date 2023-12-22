@@ -5,11 +5,16 @@ import Starter from './Starter'
 import Toolbelt from './Toolbelt'
 import * as path from 'path'
 import PackageJson from './PackageJson'
+import GraphQLStarter from './cloudrun-graphql/GraphQLStarter'
 
 export default class Boostrap {
   protected starters: Starter[]
   constructor() {
-    this.starters = [new CloudRunStarter(), new CloudFunctionsStarter()]
+    this.starters = [
+      new CloudRunStarter(),
+      new CloudFunctionsStarter(),
+      new GraphQLStarter(),
+    ]
   }
   public runCLI(args: string[]) {
     const parsed = this.parseCLIArgs(args)
@@ -23,6 +28,7 @@ export default class Boostrap {
       npm,
       packageJson,
       assetDirectory: `${__filename}/../../starter/${parsed.starter.name}`,
+      sharedDirectory: `${__filename}/../../starter/shared`,
       destination: parsed.destination,
     })
     parsed.starter.setToolbelt(toolbelt)
@@ -64,8 +70,9 @@ export default class Boostrap {
     DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
     
     Starters available:
-        cloudrun        Cloud Run + express
-        cloudfunctions  Cloud Functions + graphql
+        cloudrun          Cloud Run + express
+        cloudrun-graphql  Cloud Run + express + graphql
+        cloudfunctions    Cloud Functions + graphql
     `)
   }
 }

@@ -8,16 +8,19 @@ export default class Toolbelt {
   public readonly npm: Npm
   public readonly packageJson: PackageJson
   readonly assetDirectory: string
+  readonly sharedDirectory: string
   readonly destination: string
   constructor(params: {
     npm: Npm
     packageJson: PackageJson
     assetDirectory: string
+    sharedDirectory: string
     destination: string
   }) {
     this.npm = params.npm
     this.packageJson = params.packageJson
     this.assetDirectory = params.assetDirectory
+    this.sharedDirectory = params.sharedDirectory
     this.destination = params.destination
   }
   public stringToPath(str: string) {
@@ -61,7 +64,21 @@ export default class Toolbelt {
     }
     name = this.stringToPath(name)
     destination = this.stringToPath(this.destination)
-    this.cpFile(`${this.assetDirectory}/${name}`, destination, { destFileName: destinationName })
+    this.cpFile(`${this.assetDirectory}/${name}`, destination, {
+      destFileName: destinationName,
+    })
+  }
+  public copySharedAsset(name: string, destination?: string) {
+    let destinationName = name
+    if (path.basename(name) === '.gitignore') {
+      name = '.gitignore_'
+      destinationName = '.gitignore'
+    }
+    name = this.stringToPath(name)
+    destination = this.stringToPath(this.destination)
+    this.cpFile(`${this.sharedDirectory}/${name}`, destination, {
+      destFileName: destinationName,
+    })
   }
   public symlink(linkName: string, linkedFile: string) {
     linkName = this.stringToPath(linkName)
