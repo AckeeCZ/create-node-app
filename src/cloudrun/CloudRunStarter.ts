@@ -47,12 +47,26 @@ export default class CloudRunStarter implements Starter {
 
     tb.npm.i('configuru')
     tb.npm.i('pino')
+    tb.npm.i('pino-http')
     tb.npm.iDev('pino-pretty')
     tb.copyAsset('.env.jsonc')
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
     tb.copyAsset('src/config.ts')
     tb.copyAsset('src/logger.ts')
     tb.copyAsset('src/index.ts')
+
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/errors`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/util`))
+    tb.copyAsset('src/app/server.ts')
+    tb.copyAsset('src/app/errors/index.ts')
+    tb.copyAsset('src/app/errors/DomainError.ts')
+    tb.copyAsset('src/app/errors/errorCode.ts')
+    tb.copyAsset('src/app/util/express.util.ts')
+    tb.copyAsset('src/app/util/index.ts')
+
+    tb.npm.i('express')
+    tb.npm.iDev('@types/express')
 
     tb.npm.iDev('mocha')
     tb.npm.iDev('ts-mocha')
@@ -86,12 +100,5 @@ export default class CloudRunStarter implements Starter {
     )
 
     tb.packageJson.runScript('build')
-    tb.packageJson.runScript('start')
-
-    tb.packageJson.runScript('test')
-    tb.packageJson.runScript('ci-test')
-
-    tb.packageJson.runScript('codestyle')
-    tb.packageJson.runScript('ci-lint')
   }
 }

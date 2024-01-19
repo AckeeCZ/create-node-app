@@ -16,7 +16,7 @@ export default class CloudFunctionsStarter implements Starter {
     tb.packageJson.mergeWith({
       main: 'lib/index.js',
       engines: {
-        node: '16',
+        node: '20',
       },
     })
     tb.copyAsset('.dockerignore')
@@ -31,7 +31,7 @@ export default class CloudFunctionsStarter implements Starter {
     tb.copyAsset('ci-branch-config/development.env')
     tb.copyAsset('ci-branch-config/master.env')
 
-    tb.npm.i('firebase-admin')
+    tb.npm.i('firebase-admin@11.11.1')
     tb.npm.i('firebase-functions')
     tb.packageJson.addNpmScript(
       'serve',
@@ -61,6 +61,7 @@ export default class CloudFunctionsStarter implements Starter {
 
     tb.npm.iDev('mocha')
     tb.npm.iDev('ts-mocha')
+    tb.npm.iDev('mocha-multi')
     tb.npm.iDev('mocha-junit-reporter')
     tb.npm.iDev('@types/mocha')
     tb.copyAsset('.mocharc.json', tb.destination)
@@ -98,7 +99,5 @@ export default class CloudFunctionsStarter implements Starter {
     tb.copyAsset('src/graphql/index.ts')
 
     tb.packageJson.runScript('build')
-    tb.packageJson.runScript('codestyle')
-    tb.packageJson.runScript('ci-lint')
   }
 }

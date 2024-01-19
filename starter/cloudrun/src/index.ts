@@ -1,6 +1,10 @@
 import logger from './logger'
-import { safeConfig } from './config'
+import config, { safeConfig } from './config'
+import server from './app/server'
 
 logger.info({ config: safeConfig }, 'Loaded config')
+server.listen(config.server.port, () => {
+  logger.info(`🚀 Server is running on port ${config.server.port}`)
+})
 
-logger.info('Hello world!')
+export default server

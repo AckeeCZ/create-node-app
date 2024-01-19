@@ -1,5 +1,5 @@
 # BUILDER IMAGE
-FROM node:18.16.0 AS builder
+FROM node:20.11.0 AS builder
 ARG NPM_TOKEN
 ENV NODE_PATH=.
 ENV JOBS="max"
@@ -26,7 +26,7 @@ RUN npm ci
 RUN npm run build
 
 # MAIN IMAGE
-FROM node:18.16.0-slim
+FROM node:20.11.0-slim
 
 ENV NODE_PATH=dist
 ENV CFG_JSON_PATH="/config/secrets.json"
