@@ -1,0 +1,7 @@
+variables:
+  FIREBASE_IMAGE: ackee/docker-firebase:16.17.0
+
+include:
+  - project: Ackee/gitlab-ci-templates
+    ref: cloud-function/v2.0.0
+    file: cloud-function/pipeline.yml
