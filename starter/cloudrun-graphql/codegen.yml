@@ -1,0 +1,11 @@
+schema: './src/app/api/graphql/schema/schema.graphql'
+overwrite: true
+generates:
+  src/generated/graphql.ts:
+    config:
+      useIndexSignature: true
+      scalars:
+      mappers:
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'

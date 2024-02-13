@@ -19,17 +19,17 @@ export default class CloudFunctionsStarter implements Starter {
         node: '20',
       },
     })
-    tb.copyAsset('.dockerignore')
-    tb.copyAsset('.gitignore')
-    tb.copyAsset('.gitlab-ci.yml')
-    tb.copyAsset('.nvmrc')
+    tb.copySharedAsset('.dockerignore')
+    tb.copySharedAsset('.gitignore')
+    tb.copySharedAsset('.gitlab-ci.yml')
+    tb.copySharedAsset('.nvmrc')
     tb.copyAsset('Dockerfile')
     tb.copyAsset('firebase.json')
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
-    tb.copyAsset('ci-branch-config/common.env')
-    tb.copyAsset('ci-branch-config/development.env')
-    tb.copyAsset('ci-branch-config/master.env')
+    tb.copySharedAsset('ci-branch-config/common.env')
+    tb.copySharedAsset('ci-branch-config/development.env')
+    tb.copySharedAsset('ci-branch-config/master.env')
 
     tb.npm.i('firebase-admin@11.11.1')
     tb.npm.i('firebase-functions')
@@ -64,7 +64,7 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.iDev('mocha-multi')
     tb.npm.iDev('mocha-junit-reporter')
     tb.npm.iDev('@types/mocha')
-    tb.copyAsset('.mocharc.json', tb.destination)
+    tb.copySharedAsset('.mocharc.json', tb.destination)
     tb.packageJson.addNpmScript('test', 'ts-mocha')
     tb.packageJson.addNpmScript(
       'ci-test',
@@ -79,7 +79,7 @@ export default class CloudFunctionsStarter implements Starter {
     tb.npm.iDev('eslint')
     tb.copyAsset('.eslint.tsconfig.json')
     tb.copyAsset('.eslintrc.js')
-    tb.copyAsset('prettier.config.js')
+    tb.copySharedAsset('prettier.config.js')
     tb.packageJson.addNpmScript(
       'prettier',
       "prettier --check --write '**/*.{ts,js,json,md}'"

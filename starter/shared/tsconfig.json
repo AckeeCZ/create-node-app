@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "dangerfile.ts"],
+  "include": ["src/**/*", "dangerfile.ts", "src/index.ts", "src/logger.ts"],
   "exclude": ["dangerfile.ts"],
   "compilerOptions": {
     "target": "ES2019",
@@ -13,6 +13,7 @@
     "rootDir": "src",
     "strict": true,
     "moduleResolution": "node",
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "esModuleInterop": true
   }
 }
