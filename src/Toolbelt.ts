@@ -34,10 +34,13 @@ export default class Toolbelt {
     }
   ) {
     dirpath = this.stringToPath(dirpath)
-    if (fs.existsSync(dirpath) && option?.overwrite) {
-      fs.rmSync(dirpath, { recursive: true })
+    const rootPath = ['.', './']
+    if (!rootPath.includes(dirpath)) {
+      if (fs.existsSync(dirpath) && option?.overwrite) {
+        fs.rmSync(dirpath, { recursive: true })
+      }
+      fs.mkdirSync(dirpath)
     }
-    fs.mkdirSync(dirpath)
   }
   /**
    * Like cp, but second argument does not need to include file name
