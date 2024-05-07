@@ -6,7 +6,7 @@ const server = express()
 
 server.use(util.express.requestLogger(logger))
 
-server.get('/', (res: express.Response) => {
+server.get('/', (_req: express.Request, res: express.Response) => {
   res.send('🎉 Hi :)')
 })
 
