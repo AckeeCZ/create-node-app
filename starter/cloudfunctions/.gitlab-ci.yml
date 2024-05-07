@@ -1,5 +1,5 @@
 variables:
-  FIREBASE_IMAGE: ackee/docker-firebase:16.17.0
+  FIREBASE_IMAGE: ackee/docker-firebase:20.5.1
 
 include:
   - project: Ackee/gitlab-ci-templates
