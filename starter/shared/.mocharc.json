@@ -1,5 +1,6 @@
 {
   "extension": ["ts"],
   "spec": "src/**/*.test.ts",
-  "parallel": true
+  "parallel": true,
+  "require": ["ts-node/register"]
 }

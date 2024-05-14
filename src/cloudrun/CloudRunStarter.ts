@@ -38,6 +38,7 @@ export default class CloudRunStarter implements Starter {
 
     tb.npm.iDev('typescript')
     tb.npm.iDev('@types/node')
+    tb.npm.iDev('ts-node')
     tb.npm.i('source-map-support')
     tb.copySharedAsset('tsconfig.json')
     tb.packageJson.addNpmScript('build', 'tsc')
@@ -70,14 +71,13 @@ export default class CloudRunStarter implements Starter {
     tb.npm.iDev('@types/express')
 
     tb.npm.iDev('mocha')
-    tb.npm.iDev('ts-mocha')
     tb.npm.iDev('mocha-junit-reporter')
     tb.npm.iDev('@types/mocha')
     tb.copySharedAsset('.mocharc.json', tb.destination)
-    tb.packageJson.addNpmScript('test', 'ts-mocha')
+    tb.packageJson.addNpmScript('test', 'mocha')
     tb.packageJson.addNpmScript(
       'ci-test',
-      'npm run test -- --parallel=false -R mocha-junit-reporter -O=mochaFile=./output/text.xml'
+      'npm run test -- --parallel=false -R mocha-junit-reporter -O=mochaFile=./output/test.xml'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
     tb.copyAsset('src/test/helloWorld.test.ts')
