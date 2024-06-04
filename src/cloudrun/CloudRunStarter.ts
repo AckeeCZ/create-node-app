@@ -29,7 +29,6 @@ export default class CloudRunStarter implements Starter {
     tb.copySharedAsset('docker-compose/docker-compose-entrypoint.sh')
     tb.copySharedAsset('docker-compose/docker-compose.ci.yml')
     tb.copySharedAsset('docker-compose/docker-compose.local.yml')
-    tb.copySharedAsset('docker-compose/docker-compose.override.yml')
     tb.symlink(
       `${tb.destination}/docker-compose/docker-compose.override.yml`,
       `${tb.destination}/docker-compose/docker-compose.local.yml`

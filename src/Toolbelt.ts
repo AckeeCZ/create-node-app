@@ -88,7 +88,7 @@ export default class Toolbelt {
     linkedFile = this.stringToPath(linkedFile)
     logger.info(`> ln -s ${linkName} ${linkedFile}`)
     try {
-      fs.symlinkSync(linkName, linkedFile)
+      fs.symlinkSync(linkedFile, linkName)
     } catch (error) {
       if ('code' in error && error.code === 'EEXIST') {
         // OK
