@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import PackageJson from './PackageJson'
 import Npm from './Npm'
 import logger from './Logger'
+import { Path } from './types'
 
 export default class Toolbelt {
   public readonly npm: Npm

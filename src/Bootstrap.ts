@@ -6,6 +6,7 @@ import Toolbelt from './Toolbelt'
 import * as path from 'path'
 import PackageJson from './PackageJson'
 import GraphQLStarter from './cloudrun-graphql/GraphQLStarter'
+import { Path } from './types'
 
 export default class Boostrap {
   protected starters: Starter[]

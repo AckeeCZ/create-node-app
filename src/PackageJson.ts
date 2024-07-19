@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import * as lodash from 'lodash'
 import Npm from './Npm'
 import logger from './Logger'
+import { Path } from './types'
 
 export default class PackageJson {
   public readonly path: Path
