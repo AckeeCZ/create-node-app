@@ -1,1 +1,1 @@
-type Path = string & { readonly _tag: 'path' }
+export type Path = string & { readonly _tag: 'path' }

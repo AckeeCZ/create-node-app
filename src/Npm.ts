@@ -1,5 +1,6 @@
 import * as childProcess from 'child_process'
 import logger from './Logger'
+import { Path } from './types'
 
 export default class Npm {
   public readonly dir: Path

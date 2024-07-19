@@ -8,8 +8,9 @@ export default class CloudRunStarter implements Starter {
     this.toolbelt = toolbelt
     return this
   }
+
   public install(): void {
-    if (!this.toolbelt) {
+    if (this.toolbelt == null) {
       throw new Error('No toolbelt')
     }
     const tb = this.toolbelt
