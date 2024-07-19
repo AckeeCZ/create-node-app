@@ -1,6 +1,12 @@
+<div align="center">
+
+![](logo.png)
+
+</div>
+
 # Create Node App
 
-CLI to hel you setup Node.js TypeScript project. Set up project includes
+CLI to help you set up Node.js TypeScript project. Set up project includes
 
 - code style tools (prettier, lint)
 - testing (using jest)
