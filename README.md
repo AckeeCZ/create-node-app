@@ -1,3 +1,9 @@
+<div align="center">
+
+![](logo.png)
+
+</div>
+
 # Create Node App
 
 CLI to hel you setup Node.js TypeScript project. Set up project includes
