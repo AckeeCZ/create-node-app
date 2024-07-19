@@ -4,6 +4,7 @@ const defaultConfig = {
 }
 
 module.exports = {
+  root: true,
   ignorePatterns: ['dist', 'docs', 'src/generated'],
   overrides: [
     {

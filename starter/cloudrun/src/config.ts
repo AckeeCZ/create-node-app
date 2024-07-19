@@ -1,4 +1,4 @@
-import { createLoader, safeValues, values } from 'configuru'
+import { createLoader, maskedValues, values } from 'configuru'
 import { Level } from 'pino'
 
 const loader = createLoader({
@@ -19,4 +19,4 @@ const configSchema = {
 }
 
 export default values(configSchema)
-export const safeConfig = safeValues(configSchema)
+export const safeConfig = maskedValues(configSchema)
