@@ -83,12 +83,20 @@ export default class CloudRunStarter implements Starter {
 
     tb.npm.iDev('mocha')
     tb.npm.iDev('mocha-junit-reporter')
+    tb.npm.iDev('mocha-multi-reporters')
+    tb.npm.iDev('nyc')
     tb.npm.iDev('@types/mocha')
+    tb.npm.iDev('@istanbuljs/nyc-config-typescript')
     tb.copySharedAsset('.mocharc.json', tb.destination)
+    tb.copySharedAsset('.mocha-junit-config.json', tb.destination)
     tb.packageJson.addNpmScript('test', 'mocha')
     tb.packageJson.addNpmScript(
+      'ci-test:no-coverage',
+      'npm run test -- --parallel=false -R mocha-multi-reporters --reporter-options configFile=.mocha-junit-config.json'
+    )
+    tb.packageJson.addNpmScript(
       'ci-test',
-      'npm run test -- --parallel=false -R mocha-junit-reporter -O=mochaFile=./output/text.xml'
+      'nyc -a -r cobertura --report-dir output npm run ci-test:no-coverage'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
     tb.copyAsset('src/test/helloWorld.test.ts')
@@ -96,6 +104,7 @@ export default class CloudRunStarter implements Starter {
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
     tb.npm.iDev('eslint')
+    tb.npm.iDev('eslint-formatter-gitlab')
     tb.copyAsset('.eslint.tsconfig.json')
     tb.copyAsset('.eslintrc.js')
     tb.copySharedAsset('prettier.config.js')
