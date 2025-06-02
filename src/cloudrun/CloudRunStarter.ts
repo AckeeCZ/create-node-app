@@ -22,10 +22,29 @@ export default class CloudRunStarter implements Starter {
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
     tb.copySharedAsset('ci-branch-config/common.env')
+    tb.replaceInFile(
+      `ci-branch-config/common.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.copySharedAsset('ci-branch-config/development.env')
+    tb.replaceInFile(
+      `ci-branch-config/development.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.copySharedAsset('ci-branch-config/stage.env')
+    tb.replaceInFile(
+      `ci-branch-config/stage.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.copySharedAsset('ci-branch-config/master.env')
-
+    tb.replaceInFile(
+      `ci-branch-config/master.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.mkdir(tb.stringToPath(`${tb.destination}/docker-compose`))
     tb.copySharedAsset('docker-compose/docker-compose-entrypoint.sh')
     tb.copySharedAsset('docker-compose/docker-compose.ci.yml')
@@ -35,6 +54,11 @@ export default class CloudRunStarter implements Starter {
       `${tb.destination}/docker-compose/docker-compose.local.yml`
     )
     tb.copySharedAsset('docker-compose/docker-compose.yml')
+    tb.replaceInFile(
+      `docker-compose/docker-compose.yml`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
 
     tb.npm.iDev('typescript')
     tb.npm.iDev('@types/node')

@@ -11,18 +11,21 @@ export default class Toolbelt {
   readonly assetDirectory: string
   readonly sharedDirectory: string
   readonly destination: string
+  readonly projectName?: string
   constructor(params: {
     npm: Npm
     packageJson: PackageJson
     assetDirectory: string
     sharedDirectory: string
     destination: string
+    projectName?: string
   }) {
     this.npm = params.npm
     this.packageJson = params.packageJson
     this.assetDirectory = params.assetDirectory
     this.sharedDirectory = params.sharedDirectory
     this.destination = params.destination
+    this.projectName = params.projectName
   }
   public stringToPath(str: string) {
     return path.normalize(str) as Path
@@ -83,6 +86,17 @@ export default class Toolbelt {
     this.cpFile(`${this.sharedDirectory}/${name}`, destination, {
       destFileName: destinationName,
     })
+  }
+  public replaceInFile(
+    filePath: string,
+    placeholder: string,
+    replacement: string = 'REPLACEME'
+  ) {
+    filePath = this.stringToPath(`${this.destination}/${filePath}`)
+    let content = fs.readFileSync(filePath, 'utf8')
+    /* eslint-disable-next-line security/detect-non-literal-regexp */
+    content = content.replace(new RegExp(placeholder, 'g'), replacement)
+    fs.writeFileSync(filePath, content)
   }
   public symlink(linkName: string, linkedFile: string) {
     linkName = this.stringToPath(linkName)

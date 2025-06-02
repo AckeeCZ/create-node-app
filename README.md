@@ -22,6 +22,7 @@ Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app STARTER [DIRE
 
 STARTER        Which template to setup
 DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
+PROJECT_NAME   (optional) Name of the project - used in .env files
 
 Starters available:
     cloudrun            Cloud Run + express

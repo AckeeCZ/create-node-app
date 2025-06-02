@@ -31,6 +31,7 @@ export default class Boostrap {
       assetDirectory: `${__filename}/../../starter/${parsed.starter.name}`,
       sharedDirectory: `${__filename}/../../starter/shared`,
       destination: parsed.destination,
+      projectName: parsed.projectName,
     })
     parsed.starter.setToolbelt(toolbelt)
     toolbelt.mkdir(parsed.destination, { overwrite: true })
@@ -52,9 +53,11 @@ export default class Boostrap {
       }
 
       const destination = args[3]
+      const projectName = args[4]
       return {
         starter,
         destination: path.normalize(destination ?? './node-app') as Path,
+        projectName,
       }
     } catch (error: any) {
       this.printLn(`Failed to parse args. ${error?.stack}`)
@@ -65,11 +68,12 @@ export default class Boostrap {
 
   protected printCLIHelp() {
     this.printLn(`
-    Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY]
+    Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY] [PROJECT_NAME]
 
     STARTER        Which template to setup
     DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
-    
+    PROJECT_NAME   (optional) Name of the project - used in .env files
+
     Starters available:
         cloudrun          Cloud Run + express
         cloudrun-graphql  Cloud Run + express + graphql
