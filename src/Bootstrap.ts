@@ -1,4 +1,3 @@
-import { CloudFunctionsStarter } from './cloudfunctions/CloudFunctionsStarter.js'
 import { CloudRunStarter } from './cloudrun/CloudRunStarter.js'
 import { Npm } from './Npm.js'
 import { Toolbelt } from './Toolbelt.js'
@@ -12,11 +11,7 @@ import { logger } from './Logger.js'
 import { Starter } from './Starter.js'
 
 export class Bootstrap {
-  protected starters: Starter[] = [
-    new CloudRunStarter(),
-    new CloudFunctionsStarter(),
-    new GraphQLStarter(),
-  ]
+  protected starters: Starter[] = [new CloudRunStarter(), new GraphQLStarter()]
 
   public runCLI(args: string[]) {
     const cli = yargs(hideBin(args))

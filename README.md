@@ -10,7 +10,7 @@ CLI to help you set up Node.js TypeScript project. Set up project includes
 
 - code style tools (prettier, lint)
 - testing (using jest)
-- infrastructure files of your choice (Docker, Cloud Functions, etc.)
+- infrastructure files of your choice (Docker, etc.)
 - GitLab CI and npm ci-\* scripts (for Ackee CI/CD pipelines)
 
 ## Usage
@@ -30,11 +30,9 @@ Options:
 Starters available:
     cloudrun            Cloud Run + express
     cloudrun-graphql    Cloud Run + graphql
-    cloudfunctions      Cloud Functions + graphql
 ```
 
 Supported starter templates:
 
 - [Cloud Run](./starter/cloudrun/README.md)
 - [GraphQL Cloud Run](./starter/cloudrun-graphql/README.md)
-- [Cloud Functions](./starter/cloudfunctions/README.md)
