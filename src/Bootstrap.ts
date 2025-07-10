@@ -77,7 +77,7 @@ export default class Boostrap {
       if ((arg === '--dir' || arg === '-d') && nextArg) {
         destination = nextArg
         i++ // Skip next arg as it's the value
-      } else if ((arg === '--name' || arg === '-n') && nextArg) {
+      } else if ((arg === '--project-name' || arg === '-n') && nextArg) {
         projectName = nextArg
         i++ 
       } else if (arg === '--help' || arg === '-h') {
@@ -107,15 +107,15 @@ export default class Boostrap {
     STARTER        Which template to setup (required)
 
     Options:
-      --dir, -d DIR       Destination directory (default: ./node-app)
-      --name, -n NAME     Project name used in config files (default: directory basename)
-      --help, -h          Show this help message
+      --dir, -d DIR               Destination directory (default: ./node-app)
+      --project-name, -n NAME     Google Cloud project name (default: directory basename)
+      --help, -h                  Show this help message
 
     Examples:
       create-node-app cloudrun
       create-node-app cloudrun --dir ./my-app
-      create-node-app cloudrun --name my-project  
-      create-node-app cloudrun --dir ./my-app --name my-project
+      create-node-app cloudrun --project-name my-project  
+      create-node-app cloudrun --dir ./my-app --project-name my-project
 
     Starters available:
         cloudrun          Cloud Run + express
