@@ -52,11 +52,11 @@ export default class Boostrap {
         process.exit(1)
       }
 
-      const destination = args[3]
-      const projectName = args[4]
+      const { destination, projectName } = this.parseOptionalArgs(args.slice(3))
+
       return {
         starter,
-        destination: path.normalize(destination ?? './node-app') as Path,
+        destination: path.normalize(destination) as Path,
         projectName,
       }
     } catch (error: any) {
@@ -66,13 +66,56 @@ export default class Boostrap {
     }
   }
 
+  private parseOptionalArgs(remainingArgs: string[]) {
+    let destination: string | undefined
+    let projectName: string | undefined
+
+    for (let i = 0; i < remainingArgs.length; i++) {
+      const arg = remainingArgs[i]
+      const nextArg = remainingArgs[i + 1]
+
+      if ((arg === '--dir' || arg === '-d') && nextArg) {
+        destination = nextArg
+        i++ // Skip next arg as it's the value
+      } else if ((arg === '--name' || arg === '-n') && nextArg) {
+        projectName = nextArg
+        i++ 
+      } else if (arg === '--help' || arg === '-h') {
+        this.printCLIHelp()
+        process.exit(0)
+      } else {
+        this.printLn(`Unknown argument: ${arg}`)
+        this.printCLIHelp()
+        process.exit(1)
+      }
+    }
+
+    // Apply defaults
+    const finalDestination = destination ?? './node-app'
+    const finalProjectName = projectName ?? path.basename(path.resolve(finalDestination))
+
+    return {
+      destination: finalDestination,
+      projectName: finalProjectName,
+    }
+  }
+
   protected printCLIHelp() {
     this.printLn(`
-    Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY] [PROJECT_NAME]
+    Usage: npx github:AckeeCZ/create-node-app STARTER [OPTIONS]
 
-    STARTER        Which template to setup
-    DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
-    PROJECT_NAME   (optional) Name of the project - used in .env files
+    STARTER        Which template to setup (required)
+
+    Options:
+      --dir, -d DIR       Destination directory (default: ./node-app)
+      --name, -n NAME     Project name used in config files (default: directory basename)
+      --help, -h          Show this help message
+
+    Examples:
+      create-node-app cloudrun
+      create-node-app cloudrun --dir ./my-app
+      create-node-app cloudrun --name my-project  
+      create-node-app cloudrun --dir ./my-app --name my-project
 
     Starters available:
         cloudrun          Cloud Run + express
