@@ -24,7 +24,7 @@ STARTER        Which template to setup (required)
 
 Options:
   --dir, -d DIR       Destination directory (default: ./node-app)
-  --name, -n NAME     Project name used in config files (default: directory basename)
+  --project-name, -n NAME     Google Cloud project name (default: directory basename)
   --help, -h          Show this help message
 
 Starters available:
