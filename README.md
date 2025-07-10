@@ -18,11 +18,14 @@ CLI to help you set up Node.js TypeScript project. Set up project includes
 Run directly from GitHub repo via npx:
 
 ```
-Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app STARTER [DIRECTORY]
+Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app STARTER [OPTIONS] [DIRECTORY]
 
-STARTER        Which template to setup
-DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
-PROJECT_NAME   (optional) Name of the project - used in .env files
+STARTER        Which template to setup (required)
+
+Options:
+  --dir, -d DIR       Destination directory (default: ./node-app)
+  --name, -n NAME     Project name used in config files (default: directory basename)
+  --help, -h          Show this help message
 
 Starters available:
     cloudrun            Cloud Run + express
