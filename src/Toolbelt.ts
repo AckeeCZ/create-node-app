@@ -30,6 +30,23 @@ export class Toolbelt {
   public stringToPath(str: string) {
     return path.normalize(str) as Path
   }
+
+  public isDirectoryEmpty(dirpath: string): boolean {
+    const path = this.stringToPath(dirpath)
+
+    if (!fs.existsSync(path)) {
+      return true
+    }
+
+    const stat = fs.statSync(path)
+    if (!stat.isDirectory()) {
+      return true
+    }
+
+    const contents = fs.readdirSync(path)
+    return contents.length === 0
+  }
+
   public mkdir(
     dirpath: string,
     option?: {
@@ -43,7 +60,7 @@ export class Toolbelt {
       if (fs.existsSync(dirpath) && option?.overwrite) {
         fs.rmSync(dirpath, { recursive: true })
       }
-      fs.mkdirSync(dirpath)
+      fs.mkdirSync(dirpath, { recursive: true })
     }
   }
   /**

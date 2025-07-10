@@ -35,6 +35,13 @@ export class Bootstrap {
         default: 'node-app',
         description: 'Google Cloud project name',
       })
+      .option('force', {
+        type: 'boolean',
+        alias: 'f',
+        default: false,
+        description:
+          "Overwrite existing destination directory if it's not empty",
+      })
       .version('1.0.0')
       .help()
 
@@ -73,7 +80,19 @@ export class Bootstrap {
       projectName: parsedArgs.projectName,
     })
     starter.setToolbelt(toolbelt)
-    toolbelt.mkdir(destination, { overwrite: true })
+
+    if (!toolbelt.isDirectoryEmpty(destination)) {
+      if (!parsedArgs.force) {
+        logger.info(
+          `Directory '${destination}' already exists and is not empty. Use --force or -f flag to overwrite the existing directory.`
+        )
+        process.exit(1)
+      } else {
+        logger.info(`Overwriting existing directory '${destination}'`)
+      }
+    }
+
+    toolbelt.mkdir(destination, { overwrite: parsedArgs.force })
     toolbelt.npm.init()
     starter.install()
   }
