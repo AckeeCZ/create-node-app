@@ -129,7 +129,7 @@ export default class CloudRunStarter implements Starter {
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
     tb.npm.iDev('eslint')
-    tb.npm.iDev('eslint-formatter-gitlab')
+    tb.npm.iDev('eslint-formatter-gitlab^5.0.0')
     tb.copyAsset('.eslint.tsconfig.json')
     tb.copyAsset('.eslintrc.js')
     tb.copySharedAsset('prettier.config.js')
