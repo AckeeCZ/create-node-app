@@ -1,9 +1,9 @@
 import * as path from 'path'
 import * as fs from 'fs'
-import * as lodash from 'lodash'
-import { Npm } from './Npm'
-import { logger } from './Logger'
-import { Path } from './types'
+import * as lodash from 'lodash-es'
+import { Npm } from './Npm.js'
+import { logger } from './Logger.js'
+import { Path } from './types.js'
 
 export class PackageJson {
   public readonly path: Path
@@ -15,6 +15,11 @@ export class PackageJson {
     }
     this.path = packagejsonPath
     this.npm = npm
+  }
+  public setType(type: 'module' | 'commonjs') {
+    this.mergeWith({
+      type,
+    })
   }
   public toJSON() {
     return JSON.parse(fs.readFileSync(this.path, 'utf-8'))

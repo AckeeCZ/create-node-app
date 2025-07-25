@@ -1,10 +1,11 @@
-import { Starter } from '../Starter'
-import { Toolbelt } from '../Toolbelt'
+import { Starter } from '../Starter.js'
+import { Toolbelt } from '../Toolbelt.js'
 
 export class CloudRunStarter implements Starter {
   public readonly name = 'cloudrun'
   protected toolbelt?: Toolbelt
-  setToolbelt(toolbelt: Toolbelt): Starter {
+
+  public setToolbelt(toolbelt: Toolbelt): Starter {
     this.toolbelt = toolbelt
     return this
   }
@@ -65,6 +66,7 @@ export class CloudRunStarter implements Starter {
     tb.npm.iDev('ts-node')
     tb.npm.i('source-map-support')
     tb.copySharedAsset('tsconfig.json')
+    tb.packageJson.setType('module')
     tb.packageJson.addNpmScript('build', 'tsc')
     tb.packageJson.addNpmScript(
       'start',
@@ -85,11 +87,9 @@ export class CloudRunStarter implements Starter {
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/errors`))
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/util`))
     tb.copyAsset('src/app/server.ts')
-    tb.copyAsset('src/app/errors/index.ts')
     tb.copyAsset('src/app/errors/DomainError.ts')
     tb.copyAsset('src/app/errors/errorCode.ts')
     tb.copyAsset('src/app/util/express.util.ts')
-    tb.copyAsset('src/app/util/index.ts')
 
     tb.npm.i('express')
     tb.npm.iDev('@types/express')
@@ -112,6 +112,7 @@ export class CloudRunStarter implements Starter {
       'nyc -a -r cobertura --report-dir output npm run ci-test:no-coverage'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
+    tb.copySharedAsset('src/test/setup.ts')
     tb.copyAsset('src/test/helloWorld.test.ts')
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
@@ -119,8 +120,8 @@ export class CloudRunStarter implements Starter {
     tb.npm.iDev('eslint')
     tb.npm.iDev('eslint-formatter-gitlab@^5.0.0')
     tb.copyAsset('.eslint.tsconfig.json')
-    tb.copyAsset('.eslintrc.js')
-    tb.copySharedAsset('prettier.config.js')
+    tb.copyAsset('.eslintrc.cjs')
+    tb.copySharedAsset('prettier.config.cjs')
 
     tb.packageJson.addNpmScript(
       'prettier',

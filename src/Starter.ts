@@ -1,4 +1,4 @@
-import { Toolbelt } from './Toolbelt'
+import { Toolbelt } from './Toolbelt.js'
 
 export interface Starter {
   readonly name: string

@@ -9,7 +9,7 @@
     "incremental": true,
     "checkJs": true,
     "sourceMap": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "rootDir": "src",
     "strict": true,
     "moduleResolution": "node",

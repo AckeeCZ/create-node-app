@@ -1,17 +1,17 @@
-import { CloudFunctionsStarter } from './cloudfunctions/CloudFunctionsStarter'
-import { CloudRunStarter } from './cloudrun/CloudRunStarter'
-import { Npm } from './Npm'
-import { Toolbelt } from './Toolbelt'
+import { CloudFunctionsStarter } from './cloudfunctions/CloudFunctionsStarter.js'
+import { CloudRunStarter } from './cloudrun/CloudRunStarter.js'
+import { Npm } from './Npm.js'
+import { Toolbelt } from './Toolbelt.js'
 import * as path from 'path'
-import { PackageJson } from './PackageJson'
-import { GraphQLStarter } from './cloudrun-graphql/GraphQLStarter'
-import { Path } from './types'
+import { PackageJson } from './PackageJson.js'
+import { GraphQLStarter } from './cloudrun-graphql/GraphQLStarter.js'
+import { Path } from './types.js'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { logger } from './Logger'
-import { Starter } from './Starter'
+import { logger } from './Logger.js'
+import { Starter } from './Starter.js'
 
-export default class Boostrap {
+export class Bootstrap {
   protected starters: Starter[] = [
     new CloudRunStarter(),
     new CloudFunctionsStarter(),
@@ -62,8 +62,18 @@ export default class Boostrap {
     const toolbelt = new Toolbelt({
       npm,
       packageJson,
-      assetDirectory: `${__filename}/../../starter/${starter.name}`,
-      sharedDirectory: `${__filename}/../../starter/shared`,
+      assetDirectory: path.join(
+        import.meta.dirname,
+        '..',
+        'starter',
+        starter.name
+      ),
+      sharedDirectory: path.join(
+        import.meta.dirname,
+        '..',
+        'starter',
+        'shared'
+      ),
       destination: destination,
       projectName: parsedArgs.projectName,
     })

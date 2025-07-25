@@ -1,15 +1,17 @@
 import express from 'express'
-import * as util from './util'
-import logger from '../logger'
+import { requestLogger, errorController } from './util/express.util.js'
+import logger from '../logger.js'
 
 const server = express()
 
-server.use(util.express.requestLogger(logger))
+server.disable('x-powered-by')
+
+server.use(requestLogger(logger))
 
 server.get('/', (_req: express.Request, res: express.Response) => {
   res.send('🎉 Hi :)')
 })
 
-server.use(util.express.errorController())
+server.use(errorController())
 
 export default server

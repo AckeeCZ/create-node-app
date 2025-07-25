@@ -20,10 +20,12 @@ module.exports = {
       },
     },
     {
-      files: ['*.graphql'],
+      files: ['**/*.graphql'],
       extends: 'plugin:@graphql-eslint/schema-recommended',
       parserOptions: {
-        schema: './src/app/api/graphql/schema/*.graphql',
+        graphQLConfig: {
+          schema: './src/app/api/graphql/schema/*.graphql',
+        },
       },
       rules: {
         '@graphql-eslint/strict-id-in-types': 0,

@@ -1,9 +1,9 @@
 import * as path from 'path'
 import * as fs from 'fs'
-import { PackageJson } from './PackageJson'
-import { Npm } from './Npm'
-import { logger } from './Logger'
-import { Path } from './types'
+import { PackageJson } from './PackageJson.js'
+import { Npm } from './Npm.js'
+import { logger } from './Logger.js'
+import { Path } from './types.js'
 
 export class Toolbelt {
   public readonly npm: Npm

@@ -1,10 +1,11 @@
-import { Starter } from '../Starter'
-import { Toolbelt } from '../Toolbelt'
+import { Starter } from '../Starter.js'
+import { Toolbelt } from '../Toolbelt.js'
 
 export class GraphQLStarter implements Starter {
   public readonly name = 'cloudrun-graphql'
   protected toolbelt?: Toolbelt
-  setToolbelt(toolbelt: Toolbelt): Starter {
+
+  public setToolbelt(toolbelt: Toolbelt): Starter {
     this.toolbelt = toolbelt
     return this
   }
@@ -114,6 +115,7 @@ export class GraphQLStarter implements Starter {
     tb.npm.iDev('@istanbuljs/nyc-config-typescript')
     tb.copySharedAsset('.mocharc.json', tb.destination)
     tb.copySharedAsset('.mocha-junit-config.json', tb.destination)
+    tb.packageJson.setType('module')
     tb.packageJson.addNpmScript('test', 'mocha')
     tb.packageJson.addNpmScript(
       'ci-test:no-coverage',
@@ -124,15 +126,17 @@ export class GraphQLStarter implements Starter {
       'nyc -a -r cobertura --report-dir output npm run ci-test:no-coverage'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
+    tb.copySharedAsset('src/test/setup.ts')
     tb.copyAsset('src/test/helloWorld.test.ts')
 
+    tb.npm.i('@as-integrations/express5')
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
     tb.npm.iDev('eslint')
-    tb.npm.iDev('eslint-formatter-gitlab^5.0.0')
+    tb.npm.iDev('eslint-formatter-gitlab@^5.0.0')
     tb.copyAsset('.eslint.tsconfig.json')
-    tb.copyAsset('.eslintrc.js')
-    tb.copySharedAsset('prettier.config.js')
+    tb.copyAsset('.eslintrc.cjs')
+    tb.copySharedAsset('prettier.config.cjs')
 
     tb.packageJson.addNpmScript(
       'prettier',
@@ -159,7 +163,7 @@ export class GraphQLStarter implements Starter {
     tb.npm.i('@graphql-tools/schema')
     tb.npm.i('graphql')
     tb.npm.i('express')
-    tb.npm.i('graphql-middleware')
+    tb.npm.iDev('@types/express')
 
     tb.packageJson.runScript('build')
   }

@@ -1,5 +1,5 @@
 import logger from 'pino'
-import config from './config'
+import config from './config.js'
 
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logseverity
 const PinoLevelToSeverityLookup: Record<string, string> = {

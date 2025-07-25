@@ -1,23 +1,21 @@
 import { ApolloServer } from '@apollo/server'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { applyMiddleware } from 'graphql-middleware'
-import { resolvers } from './api/graphql/resolvers'
-import config from '../config'
-import { schema } from './api/graphql/schema'
+import { resolvers } from './api/graphql/resolvers.js'
+import { config } from '../config.js'
+import { schema } from './api/graphql/schema.js'
 import express from 'express'
-import { ctrl } from './controller'
-import { expressMiddleware } from '@apollo/server/express4'
-import logger from '../logger'
+import { ctrl } from './controller.js'
+import { expressMiddleware } from '@as-integrations/express5'
+import { logger } from '../logger.js'
 
-export const clientSchema = applyMiddleware(
-  makeExecutableSchema({
-    typeDefs: schema,
-    resolvers,
-  })
-)
+export const clientSchema = makeExecutableSchema({
+  typeDefs: schema,
+  resolvers,
+})
 
 export const createAppServer = () => {
   const app = express()
+  app.disable('x-powered-by')
 
   const server = new ApolloServer({
     schema: clientSchema,
