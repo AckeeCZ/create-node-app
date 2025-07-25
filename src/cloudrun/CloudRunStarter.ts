@@ -1,7 +1,7 @@
-import Starter from '../Starter'
-import Toolbelt from '../Toolbelt'
+import { Starter } from '../Starter'
+import { Toolbelt } from '../Toolbelt'
 
-export default class CloudRunStarter implements Starter {
+export class CloudRunStarter implements Starter {
   public readonly name = 'cloudrun'
   protected toolbelt?: Toolbelt
   setToolbelt(toolbelt: Toolbelt): Starter {

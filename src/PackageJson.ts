@@ -1,11 +1,11 @@
 import * as path from 'path'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
-import Npm from './Npm'
-import logger from './Logger'
+import { Npm } from './Npm'
+import { logger } from './Logger'
 import { Path } from './types'
 
-export default class PackageJson {
+export class PackageJson {
   public readonly path: Path
   protected npm: Npm
   constructor(npm: Npm) {

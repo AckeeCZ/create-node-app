@@ -1,7 +1,7 @@
-import Starter from '../Starter'
-import Toolbelt from '../Toolbelt'
+import { Starter } from '../Starter'
+import { Toolbelt } from '../Toolbelt'
 
-export default class CloudFunctionsStarter implements Starter {
+export class CloudFunctionsStarter implements Starter {
   public readonly name = 'cloudfunctions'
   protected toolbelt?: Toolbelt
   setToolbelt(toolbelt: Toolbelt): Starter {
