@@ -1,6 +1,7 @@
 import assert from 'node:assert'
-import { createAppServer } from '../app/server'
-import gql from 'graphql-tag'
+import { describe, it } from 'mocha'
+import { createAppServer } from '../app/server.js'
+import { gql } from 'graphql-tag'
 
 describe('Hello world', () => {
   it('should return greeting', async () => {

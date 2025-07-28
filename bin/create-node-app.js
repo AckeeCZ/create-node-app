@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-require('source-map-support').install()
-const Bootstrap = require('../lib/Bootstrap').default
+import { Bootstrap } from '../lib/Bootstrap.js'
+import * as sourceMapSupport from 'source-map-support'
 
+sourceMapSupport.install()
 new Bootstrap().runCLI(process.argv)

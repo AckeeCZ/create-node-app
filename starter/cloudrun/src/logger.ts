@@ -1,5 +1,5 @@
-import logger from 'pino'
-import config from './config'
+import { pino } from 'pino'
+import config from './config.js'
 
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logseverity
 const PinoLevelToSeverityLookup: Record<string, string> = {
@@ -25,11 +25,11 @@ const defaultPinoConf = (defaultLevel: string) => ({
     },
   },
   serializers: {
-    error: logger.stdSerializers.err,
+    error: pino.stdSerializers.err,
   },
 })
 
-export default logger({
+export default pino({
   ...defaultPinoConf(config.logger.defaultLevel),
   transport: config.logger.pretty
     ? {

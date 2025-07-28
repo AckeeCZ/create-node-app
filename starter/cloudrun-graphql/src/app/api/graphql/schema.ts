@@ -3,5 +3,5 @@ import { mergeTypeDefs } from '@graphql-tools/merge'
 import path from 'path'
 
 export const schema = [
-  mergeTypeDefs(loadFilesSync(path.join(__dirname, 'schema'))),
+  mergeTypeDefs(loadFilesSync(path.join(import.meta.dirname, 'schema'))),
 ]

@@ -1,28 +1,31 @@
 import * as path from 'path'
 import * as fs from 'fs'
-import PackageJson from './PackageJson'
-import Npm from './Npm'
-import logger from './Logger'
-import { Path } from './types'
+import { PackageJson } from './PackageJson.js'
+import { Npm } from './Npm.js'
+import { logger } from './Logger.js'
+import { Path } from './types.js'
 
-export default class Toolbelt {
+export class Toolbelt {
   public readonly npm: Npm
   public readonly packageJson: PackageJson
   readonly assetDirectory: string
   readonly sharedDirectory: string
   readonly destination: string
+  readonly projectName?: string
   constructor(params: {
     npm: Npm
     packageJson: PackageJson
     assetDirectory: string
     sharedDirectory: string
     destination: string
+    projectName?: string
   }) {
     this.npm = params.npm
     this.packageJson = params.packageJson
     this.assetDirectory = params.assetDirectory
     this.sharedDirectory = params.sharedDirectory
     this.destination = params.destination
+    this.projectName = params.projectName
   }
   public stringToPath(str: string) {
     return path.normalize(str) as Path
@@ -83,6 +86,17 @@ export default class Toolbelt {
     this.cpFile(`${this.sharedDirectory}/${name}`, destination, {
       destFileName: destinationName,
     })
+  }
+  public replaceInFile(
+    filePath: string,
+    placeholder: string,
+    replacement: string = 'REPLACEME'
+  ) {
+    filePath = this.stringToPath(`${this.destination}/${filePath}`)
+    let content = fs.readFileSync(filePath, 'utf8')
+    /* eslint-disable-next-line security/detect-non-literal-regexp */
+    content = content.replace(new RegExp(placeholder, 'g'), replacement)
+    fs.writeFileSync(filePath, content)
   }
   public symlink(linkName: string, linkedFile: string) {
     linkName = this.stringToPath(linkName)

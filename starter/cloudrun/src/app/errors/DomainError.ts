@@ -1,4 +1,4 @@
-import * as errorCode from './errorCode'
+import * as errorCode from './errorCode.js'
 
 export class DomainError<AdditionalData = any> extends Error {
   constructor(

@@ -1,8 +1,9 @@
-import pinoHttp from 'pino-http'
-import * as express from 'express'
-import logger from '../../logger'
-import config from '../../config'
-import * as errors from '../errors'
+import { pinoHttp, Options } from 'pino-http'
+import express from 'express'
+import logger from '../../logger.js'
+import config from '../../config.js'
+import * as errors from '../errors/errorCode.js'
+import { DomainError } from '../errors/DomainError.js'
 
 export class Response {
   constructor(public readonly status: number, public readonly data: any) {}
@@ -22,15 +23,15 @@ function respond(httpResponse: express.Response, appResponse: unknown) {
 }
 
 export function requestLogger(innerLogger: typeof logger) {
-  return pinoHttp({
+  const options: Options = {
     logger: innerLogger,
     serializers: {
-      res: (res: any) => {
+      res: res => {
         res.error = res.raw.error
         res.out = res.raw.out
         return res
       },
-      req: (req: any) => {
+      req: req => {
         req.body = req.raw.body
         return req
       },
@@ -52,13 +53,38 @@ export function requestLogger(innerLogger: typeof logger) {
     customAttributeKeys: {
       err: 'error',
     },
-  })
+  }
+  return pinoHttp(options)
+}
+
+function errorToProductionObject<T extends Error>(error: T) {
+  if (error instanceof DomainError) {
+    return {
+      ...error.data,
+      code: error.code,
+    }
+  }
+  return {}
+}
+
+function errorToDevObject<T extends Error>(error: T) {
+  if (error instanceof DomainError) {
+    return {
+      ...error.data,
+      message: error.message,
+      stack: error.stack,
+    }
+  }
+  return {
+    message: error.message,
+    stack: error.stack,
+  }
 }
 
 export function errorController(): express.ErrorRequestHandler {
   return (error, _req, res, _next) => {
     const statusCode =
-      error instanceof errors.DomainError
+      error instanceof DomainError
         ? errors.ERROR_DOMAIN_CODE_TO_HTTP_STATUS[error.code] ?? 500
         : 500
     ;(res as any).error = {
@@ -77,29 +103,5 @@ export function errorController(): express.ErrorRequestHandler {
             }
       )
     )
-  }
-}
-
-function errorToProductionObject<T extends Error>(error: T) {
-  if (error instanceof errors.DomainError) {
-    return {
-      ...error.data,
-      code: error.code,
-    }
-  }
-  return {}
-}
-
-function errorToDevObject<T extends Error>(error: T) {
-  if (error instanceof errors.DomainError) {
-    return {
-      ...error.data,
-      message: error.message,
-      stack: error.stack,
-    }
-  }
-  return {
-    message: error.message,
-    stack: error.stack,
   }
 }

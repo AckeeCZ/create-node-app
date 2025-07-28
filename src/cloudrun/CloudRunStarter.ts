@@ -1,10 +1,11 @@
-import Starter from '../Starter'
-import Toolbelt from '../Toolbelt'
+import { Starter } from '../Starter.js'
+import { Toolbelt } from '../Toolbelt.js'
 
-export default class CloudRunStarter implements Starter {
+export class CloudRunStarter implements Starter {
   public readonly name = 'cloudrun'
   protected toolbelt?: Toolbelt
-  setToolbelt(toolbelt: Toolbelt): Starter {
+
+  public setToolbelt(toolbelt: Toolbelt): Starter {
     this.toolbelt = toolbelt
     return this
   }
@@ -22,10 +23,29 @@ export default class CloudRunStarter implements Starter {
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/ci-branch-config`))
     tb.copySharedAsset('ci-branch-config/common.env')
+    tb.replaceInFile(
+      `ci-branch-config/common.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.copySharedAsset('ci-branch-config/development.env')
+    tb.replaceInFile(
+      `ci-branch-config/development.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.copySharedAsset('ci-branch-config/stage.env')
+    tb.replaceInFile(
+      `ci-branch-config/stage.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.copySharedAsset('ci-branch-config/master.env')
-
+    tb.replaceInFile(
+      `ci-branch-config/master.env`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
     tb.mkdir(tb.stringToPath(`${tb.destination}/docker-compose`))
     tb.copySharedAsset('docker-compose/docker-compose-entrypoint.sh')
     tb.copySharedAsset('docker-compose/docker-compose.ci.yml')
@@ -35,12 +55,18 @@ export default class CloudRunStarter implements Starter {
       `${tb.destination}/docker-compose/docker-compose.local.yml`
     )
     tb.copySharedAsset('docker-compose/docker-compose.yml')
+    tb.replaceInFile(
+      `docker-compose/docker-compose.yml`,
+      '{{PROJECT_NAME}}',
+      tb.projectName
+    )
 
     tb.npm.iDev('typescript')
     tb.npm.iDev('@types/node')
     tb.npm.iDev('ts-node')
     tb.npm.i('source-map-support')
     tb.copySharedAsset('tsconfig.json')
+    tb.packageJson.setType('module')
     tb.packageJson.addNpmScript('build', 'tsc')
     tb.packageJson.addNpmScript(
       'start',
@@ -61,11 +87,9 @@ export default class CloudRunStarter implements Starter {
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/errors`))
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/util`))
     tb.copyAsset('src/app/server.ts')
-    tb.copyAsset('src/app/errors/index.ts')
     tb.copyAsset('src/app/errors/DomainError.ts')
     tb.copyAsset('src/app/errors/errorCode.ts')
     tb.copyAsset('src/app/util/express.util.ts')
-    tb.copyAsset('src/app/util/index.ts')
 
     tb.npm.i('express')
     tb.npm.iDev('@types/express')
@@ -88,15 +112,16 @@ export default class CloudRunStarter implements Starter {
       'nyc -a -r cobertura --report-dir output npm run ci-test:no-coverage'
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
+    tb.copySharedAsset('src/test/setup.ts')
     tb.copyAsset('src/test/helloWorld.test.ts')
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
     tb.npm.iDev('eslint')
-    tb.npm.iDev('eslint-formatter-gitlab')
+    tb.npm.iDev('eslint-formatter-gitlab@^5.0.0')
     tb.copyAsset('.eslint.tsconfig.json')
-    tb.copyAsset('.eslintrc.js')
-    tb.copySharedAsset('prettier.config.js')
+    tb.copyAsset('.eslintrc.cjs')
+    tb.copySharedAsset('prettier.config.cjs')
 
     tb.packageJson.addNpmScript(
       'prettier',

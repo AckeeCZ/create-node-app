@@ -12,10 +12,10 @@ const configSchema = {
     enableIntrospection: loader.bool('SERVER_ENABLE_INTROSPECTION'),
   },
   logger: {
-    defaultLevel: loader.custom(x => x as Level)('LOGGER_DEFAULT_LEVEL'),
+    defaultLevel: loader.custom(x => x as any as Level)('LOGGER_DEFAULT_LEVEL'),
     pretty: loader.bool('LOGGER_PRETTY'),
   },
 }
 
-export default values(configSchema)
+export const config = values(configSchema)
 export const safeConfig = maskedValues(configSchema)

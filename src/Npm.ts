@@ -1,8 +1,8 @@
 import * as childProcess from 'child_process'
-import logger from './Logger'
-import { Path } from './types'
+import { logger } from './Logger.js'
+import { Path } from './types.js'
 
-export default class Npm {
+export class Npm {
   public readonly dir: Path
   constructor(settings?: { dir?: Path }) {
     this.dir = settings?.dir as Path

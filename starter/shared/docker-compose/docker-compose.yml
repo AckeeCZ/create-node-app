@@ -3,6 +3,6 @@ services:
   postgres:
     image: postgres:15
     environment:
-      - POSTGRES_DB=REPLACEME_docker
-      - POSTGRES_USER=REPLACEME_docker
-      - POSTGRES_PASSWORD=REPLACEME_docker
+      - POSTGRES_DB={{PROJECT_NAME}}_docker
+      - POSTGRES_USER={{PROJECT_NAME}}_docker
+      - POSTGRES_PASSWORD={{PROJECT_NAME}}_docker

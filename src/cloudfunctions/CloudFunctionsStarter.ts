@@ -1,15 +1,16 @@
-import Starter from '../Starter'
-import Toolbelt from '../Toolbelt'
+import { Starter } from '../Starter.js'
+import { Toolbelt } from '../Toolbelt.js'
 
-export default class CloudFunctionsStarter implements Starter {
+export class CloudFunctionsStarter implements Starter {
   public readonly name = 'cloudfunctions'
   protected toolbelt?: Toolbelt
-  setToolbelt(toolbelt: Toolbelt): Starter {
+
+  public setToolbelt(toolbelt: Toolbelt): Starter {
     this.toolbelt = toolbelt
     return this
   }
 
-  install() {
+  public install() {
     if (this.toolbelt == null) {
       throw new Error('No toolbelt')
     }
@@ -35,6 +36,7 @@ export default class CloudFunctionsStarter implements Starter {
 
     tb.npm.i('firebase-admin@11.11.1')
     tb.npm.i('firebase-functions')
+    tb.packageJson.setType('module')
     tb.packageJson.addNpmScript(
       'serve',
       'npm run build && firebase emulators:start --only functions'
@@ -81,15 +83,16 @@ export default class CloudFunctionsStarter implements Starter {
     )
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
+    tb.copySharedAsset('src/test/setup.ts')
     tb.copyAsset('src/test/helloWorld.test.ts')
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
     tb.npm.iDev('eslint')
-    tb.npm.iDev('eslint-formatter-gitlab')
+    tb.npm.iDev('eslint-formatter-gitlab@^5.0.0')
     tb.copyAsset('.eslint.tsconfig.json')
-    tb.copyAsset('.eslintrc.js')
-    tb.copySharedAsset('prettier.config.js')
+    tb.copyAsset('.eslintrc.cjs')
+    tb.copySharedAsset('prettier.config.cjs')
     tb.packageJson.addNpmScript(
       'prettier',
       "prettier --check --write '**/*.{ts,js,json,md}'"

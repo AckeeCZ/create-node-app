@@ -1,6 +1,9 @@
 {
   "extension": ["ts"],
   "spec": "src/**/*.test.ts",
-  "parallel": true,
-  "require": ["ts-node/register"]
+  "parallel": false,
+  "enable-source-maps": true,
+  "es-module-specifier-resolution": "node",
+  "loader": "ts-node/esm",
+  "file": ["src/test/setup.ts"]
 }

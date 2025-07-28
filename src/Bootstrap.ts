@@ -1,79 +1,85 @@
-import CloudFunctionsStarter from './cloudfunctions/CloudFunctionsStarter'
-import CloudRunStarter from './cloudrun/CloudRunStarter'
-import Npm from './Npm'
-import Starter from './Starter'
-import Toolbelt from './Toolbelt'
+import { CloudFunctionsStarter } from './cloudfunctions/CloudFunctionsStarter.js'
+import { CloudRunStarter } from './cloudrun/CloudRunStarter.js'
+import { Npm } from './Npm.js'
+import { Toolbelt } from './Toolbelt.js'
 import * as path from 'path'
-import PackageJson from './PackageJson'
-import GraphQLStarter from './cloudrun-graphql/GraphQLStarter'
-import { Path } from './types'
+import { PackageJson } from './PackageJson.js'
+import { GraphQLStarter } from './cloudrun-graphql/GraphQLStarter.js'
+import { Path } from './types.js'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
+import { logger } from './Logger.js'
+import { Starter } from './Starter.js'
 
-export default class Boostrap {
-  protected starters: Starter[]
-  constructor() {
-    this.starters = [
-      new CloudRunStarter(),
-      new CloudFunctionsStarter(),
-      new GraphQLStarter(),
-    ]
-  }
+export class Bootstrap {
+  protected starters: Starter[] = [
+    new CloudRunStarter(),
+    new CloudFunctionsStarter(),
+    new GraphQLStarter(),
+  ]
+
   public runCLI(args: string[]) {
-    const parsed = this.parseCLIArgs(args)
-    this.printLn(
-      `starter=${parsed.starter.name}, destination=${parsed.destination}`
-    )
+    const cli = yargs(hideBin(args))
+      .usage('create-node-app <starter> [options]')
+      .positional('starter', {
+        name: 'starter',
+        type: 'string',
+        required: true,
+        description: 'Which template to setup (required)',
+        choices: this.starters.map(starter => starter.name),
+      })
+      .option('dir', {
+        type: 'string',
+        alias: 'd',
+        default: './node-app',
+        description: 'Destination directory',
+      })
+      .option('project-name', {
+        type: 'string',
+        alias: 'n',
+        default: 'node-app',
+        description: 'Google Cloud project name',
+      })
+      .version('1.0.0')
+      .help()
 
-    const npm = new Npm({ dir: parsed.destination })
+    const parsedArgs = cli.parseSync()
+    const starterArg = parsedArgs._[0]
+
+    const starter = this.starters.find(x => x.name === starterArg)
+    const destination = path.normalize(parsedArgs.dir) as Path
+
+    if (!starter) {
+      logger.info('Invalid starter')
+      cli.showHelp()
+      process.exit(1)
+    }
+
+    logger.info(`starter=${starter.name}, destination=${destination}`)
+
+    const npm = new Npm({ dir: destination })
     const packageJson = new PackageJson(npm)
     const toolbelt = new Toolbelt({
       npm,
       packageJson,
-      assetDirectory: `${__filename}/../../starter/${parsed.starter.name}`,
-      sharedDirectory: `${__filename}/../../starter/shared`,
-      destination: parsed.destination,
+      assetDirectory: path.join(
+        import.meta.dirname,
+        '..',
+        'starter',
+        starter.name
+      ),
+      sharedDirectory: path.join(
+        import.meta.dirname,
+        '..',
+        'starter',
+        'shared'
+      ),
+      destination: destination,
+      projectName: parsedArgs.projectName,
     })
-    parsed.starter.setToolbelt(toolbelt)
-    toolbelt.mkdir(parsed.destination, { overwrite: true })
+    starter.setToolbelt(toolbelt)
+    toolbelt.mkdir(destination, { overwrite: true })
     toolbelt.npm.init()
-    parsed.starter.install()
-  }
-  printLn(str: string) {
-    console.log(str)
-  }
-  protected parseCLIArgs(args: string[]) {
-    try {
-      const starterArg = args[2]
-      const starter = this.starters.find(x => x.name === starterArg)
-
-      if (!starter) {
-        this.printLn('Invalid starter')
-        this.printCLIHelp()
-        process.exit(1)
-      }
-
-      const destination = args[3]
-      return {
-        starter,
-        destination: path.normalize(destination ?? './node-app') as Path,
-      }
-    } catch (error: any) {
-      this.printLn(`Failed to parse args. ${error?.stack}`)
-      this.printCLIHelp()
-      process.exit(1)
-    }
-  }
-
-  protected printCLIHelp() {
-    this.printLn(`
-    Usage: npx github:AckeeCZ/create-node-app STARTER [DIRECTORY]
-
-    STARTER        Which template to setup
-    DIRECTORY      Destination directory where to set the starter up (default: ./node-app)
-    
-    Starters available:
-        cloudrun          Cloud Run + express
-        cloudrun-graphql  Cloud Run + express + graphql
-        cloudfunctions    Cloud Functions + graphql
-    `)
+    starter.install()
   }
 }

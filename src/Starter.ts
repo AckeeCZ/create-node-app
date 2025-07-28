@@ -1,6 +1,6 @@
-import Toolbelt from './Toolbelt'
+import { Toolbelt } from './Toolbelt.js'
 
-export default interface Starter {
+export interface Starter {
   readonly name: string
   setToolbelt(toolbelt: Toolbelt): Starter
   install(): void
