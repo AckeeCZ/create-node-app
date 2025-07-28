@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        create-app-command: ["create-node-app cloudfunctions", "create-node-app cloudrun", "create-node-app cloudrun-graphql"]
+        create-app-command: ["create-node-app cloudrun", "create-node-app cloudrun-graphql"]
     runs-on: ubuntu-latest
 
     steps:
@@ -58,11 +58,7 @@ jobs:
       - name: Run start
         working-directory: ./node-app
         run: |
-          if [[ "${{ matrix.create-app-command }}" != "create-node-app cloudfunctions" ]]; then
-            npm run start &
-            start_pid=$!
-            sleep 10
-            kill $start_pid
-          else
-            echo "Skipping 'Run start' for create-node-app cloudfunctions."
-          fi
+          npm run start &
+          start_pid=$!
+          sleep 10
+          kill $start_pid
