@@ -1,21 +1,34 @@
 # Cloudrun Starter
 
-Node.js project scaffolded with Cloudrun
+Node.js project scaffolded with create-node-app Cloudrun
 
-## 🎉 Initialize project
+## 🎉 Initialize new project
 
 Run `create-node-app cloudrun` to init your project. By default project is created in `../node-app` folder.
 
 You can pass `destination` argument into the command as well.
 Example:
 
-- `create-node-app cloudrun /Users/foo/Documents/bar `
+- `create-node-app cloudrun /Users/foo/Documents/bar`
+
+## 🧑‍💻 Development
+Project follows port-adapters folder structure. Three main layers can be found in [src folder](src):
+- [domain](src/domain) containing all domain services and ports for external services,
+- [adapters](src/adapters) containing implementations of ports,
+- and [view](src/view) containing entrypoints to the application (rest, cli).
+
+The main entrypoint of the application is defined in the [src/index.ts](index.ts) file. The applicaiton dependencies are defined
+and maintained in the [container.ts](src/container.ts) file which loads configuration from [config.ts](src/config.ts) using [configuru library](https://github.com/AckeeCZ/configuru).
+
+Tests are divided in the two parts:
+- integration tests should be maintained in the [test folder](src/test/)
+- unit tests should be kept close to the targeted file and hold the same name as the tested file but with `test.ts` suffix
 
 ## 👷 Continuous Integration
 
 ### Environment variables
 
-Make sure you replace all the variable values containing `REPLACEME` in `ci-branch-config` files.
+If you didn't provided GCloud project parameter, make sure you replace all the variable values containing `node-app` in `ci-branch-config` files.
 
 The following variables must be set for each branch in `ci-branch-config` directory.
 

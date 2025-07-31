@@ -1,10 +1,17 @@
-import logger from './logger.js'
-import config, { safeConfig } from './config.js'
-import server from './app/server.js'
+import { config } from './config.js'
+import { createContainer } from './container.js'
+import { createServer } from './view/server.js'
 
-logger.info({ config: safeConfig }, 'Loaded config')
+const appContainer = createContainer()
+const { logger } = appContainer
+
+const server = createServer(appContainer)
+
 server.listen(config.server.port, () => {
-  logger.info(`🚀 Server is running on port ${config.server.port}`)
+  logger.info(
+    { port: config.server.port },
+    `🚀 Server is running on port ${config.server.port}`
+  )
 })
 
 export default server

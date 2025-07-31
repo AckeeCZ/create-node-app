@@ -18,5 +18,5 @@ const configSchema = {
   },
 }
 
-export default values(configSchema)
+export const config = values(configSchema)
 export const safeConfig = maskedValues(configSchema)
