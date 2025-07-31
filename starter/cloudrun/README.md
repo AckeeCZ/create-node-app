@@ -12,7 +12,9 @@ Example:
 - `create-node-app cloudrun /Users/foo/Documents/bar`
 
 ## 🧑‍💻 Development
+
 Project follows port-adapters folder structure. Three main layers can be found in [src folder](src):
+
 - [domain](src/domain) containing all domain services and ports for external services,
 - [adapters](src/adapters) containing implementations of ports,
 - and [view](src/view) containing entrypoints to the application (rest, cli).
@@ -21,6 +23,7 @@ The main entrypoint of the application is defined in the [src/index.ts](index.ts
 and maintained in the [container.ts](src/container.ts) file which loads configuration from [config.ts](src/config.ts) using [configuru library](https://github.com/AckeeCZ/configuru).
 
 Tests are divided in the two parts:
+
 - integration tests should be maintained in the [test folder](src/test/)
 - unit tests should be kept close to the targeted file and hold the same name as the tested file but with `test.ts` suffix
 
