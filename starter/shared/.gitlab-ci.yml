@@ -2,7 +2,7 @@ variables:
   # Default configuration, check .export_variables job for calculated env variables based on branch config
 
   # Node image for pipeline runner
-  NODE_BASE_IMAGE: node:20.15.0
+  NODE_BASE_IMAGE: node:24.5.0
   # Where to store json secrets from Cloud provider
   SECRETS_PATH: '/config/secrets.json'
 

@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [20, 22, 24]
     runs-on: ubuntu-latest
 
     steps:

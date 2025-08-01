@@ -3,7 +3,6 @@
   "spec": "src/**/*.test.ts",
   "parallel": false,
   "enable-source-maps": true,
-  "es-module-specifier-resolution": "node",
-  "loader": "ts-node/esm",
+  "node-option": ["import=tsx"],
   "file": ["src/test/setup.ts"]
 }
