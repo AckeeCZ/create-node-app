@@ -139,6 +139,8 @@ export class CloudRunStarter implements Starter {
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/test`))
     tb.copySharedAsset('src/test/setup.ts')
     tb.copyAsset('src/test/health-check.test.ts')
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/test/util`))
+    tb.copyAsset('src/test/util/openapi-test.util.ts')
 
     tb.npm.iDev('@ackee/styleguide-backend-config')
     tb.npm.iDev('prettier')
