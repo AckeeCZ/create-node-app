@@ -1,4 +1,4 @@
-import healthz from 'node-healthz'
+import * as healthz from 'node-healthz'
 
 export const healthCheckService = {
   check: async (): Promise<healthz.Result> => {
