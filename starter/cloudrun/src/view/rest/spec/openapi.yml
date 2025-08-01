@@ -4,7 +4,7 @@ info:
   version: '0.0.1'
 
 paths:
-  /healthz:
+  /api/v1/healthz:
     get:
       operationId: healthz
       summary: Health check
