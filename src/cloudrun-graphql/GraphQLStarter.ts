@@ -111,12 +111,14 @@ export class GraphQLStarter implements Starter {
     tb.npm.iDev('mocha-junit-reporter')
     tb.npm.iDev('mocha-multi-reporters')
     tb.npm.iDev('nyc')
+    tb.npm.iDev('tsx')
     tb.npm.iDev('@types/mocha')
     tb.npm.iDev('@istanbuljs/nyc-config-typescript')
     tb.copySharedAsset('.mocharc.json', tb.destination)
     tb.copySharedAsset('.mocha-junit-config.json', tb.destination)
     tb.packageJson.setType('module')
     tb.packageJson.addNpmScript('test', 'mocha')
+    
     tb.packageJson.addNpmScript(
       'ci-test:no-coverage',
       'npm run test -- --parallel=false -R mocha-multi-reporters --reporter-options configFile=.mocha-junit-config.json'
