@@ -24,7 +24,7 @@ module.exports = {
       extends: 'plugin:@graphql-eslint/schema-recommended',
       parserOptions: {
         graphQLConfig: {
-          schema: './src/app/api/graphql/schema/*.graphql',
+          schema: './src/view/graphql/schema/*.graphql',
         },
       },
       rules: {

@@ -4,10 +4,15 @@ import { readdir, stat } from 'fs/promises'
 import { join, extname } from 'path'
 
 interface CommandDefinition {
+  // Description of the command used for help
   description: string
+  // Defines positional description of the command (e.g. '<filepath>' will mean it takes one positional required argument)
   positional?: string
+  // Function that will be called when the command is executed
   run: (argv: any) => Promise<void> | void
+  // Function that will be called to add options to the command
   options?: (yargs: Argv) => Argv
+  // Any other properties that will be added to the command
   [key: string]: any
 }
 

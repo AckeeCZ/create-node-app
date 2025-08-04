@@ -162,6 +162,7 @@ export class CloudRunStarter implements Starter {
 
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/view/cli`))
     tb.copyAsset('src/view/cli/cli.ts')
+    tb.copyAsset('src/view/cli/README.md')
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/view/cli/openapi`))
     tb.copyAsset('src/view/cli/openapi/generate.ts')
     tb.npm.iDev('yargs')
