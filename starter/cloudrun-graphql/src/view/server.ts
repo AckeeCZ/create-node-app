@@ -1,12 +1,12 @@
 import { ApolloServer } from '@apollo/server'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { resolvers } from './api/graphql/resolvers.js'
+import { resolvers } from './graphql/resolvers.js'
 import { config } from '../config.js'
-import { schema } from './api/graphql/schema.js'
+import { schema } from './graphql/schema.js'
 import express from 'express'
 import { ctrl } from './controller.js'
 import { expressMiddleware } from '@as-integrations/express5'
-import { logger } from '../logger.js'
+import { Container } from '../container.js'
 
 export const clientSchema = makeExecutableSchema({
   typeDefs: schema,
@@ -29,7 +29,10 @@ export const createAppServer = () => {
 export async function startServer({
   app,
   server,
-}: ReturnType<typeof createAppServer>) {
+  container,
+}: ReturnType<typeof createAppServer> & { container: Container }) {
+  const { logger } = container
+
   await server.start()
 
   app.use('/api/graphql', ctrl.json, expressMiddleware(server))

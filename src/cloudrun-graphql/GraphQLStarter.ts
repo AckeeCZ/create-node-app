@@ -74,7 +74,7 @@ export class GraphQLStarter implements Starter {
     )
     tb.packageJson.addNpmScript(
       'build:copy-schema',
-      'mkdir -p ./dist/app/api/graphql/schema && cp -r ./src/app/api/graphql/schema ./dist/app/api/graphql/schema'
+      'mkdir -p ./dist/view/graphql/schema && cp -r ./src/view/graphql/schema ./dist/view/graphql/schema'
     )
     tb.packageJson.addNpmScript(
       'build',
@@ -90,33 +90,45 @@ export class GraphQLStarter implements Starter {
     tb.npm.iDev('pino-pretty')
     tb.copyAsset('.env.jsonc')
     tb.mkdir(tb.stringToPath(`${tb.destination}/src`))
-    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app`))
-    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/api`))
-    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/api/graphql`))
-    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/api/graphql/resolvers`))
-    tb.mkdir(tb.stringToPath(`${tb.destination}/src/app/api/graphql/schema`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/view`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/domain`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/domain/errors`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/domain/ports`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/domain/utils`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/adapters`))
+    tb.copyAsset('src/domain/errors/codes.ts')
+    tb.copyAsset('src/domain/errors/errors.ts')
+    tb.copyAsset('src/domain/errors/errors.ts')
+    tb.copyAsset('src/domain/ports/logger.d.ts')
+    tb.copyAsset('src/adapters/pino.logger.ts')
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/view/graphql`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/view/graphql/resolvers`))
+    tb.mkdir(tb.stringToPath(`${tb.destination}/src/view/graphql/schema`))
     tb.copyAsset('src/config.ts')
-    tb.copyAsset('src/logger.ts')
     tb.copyAsset('src/index.ts')
+    tb.copyAsset('src/container.ts')
+    tb.copyAsset('src/context.ts')
     tb.copyAsset('codegen.yml')
 
-    tb.copyAsset('src/app/server.ts')
-    tb.copyAsset('src/app/controller.ts')
-    tb.copyAsset('src/app/api/graphql/schema.ts')
-    tb.copyAsset('src/app/api/graphql/resolvers.ts')
-    tb.copyAsset('src/app/api/graphql/resolvers/greeting.resolver.ts')
-    tb.copyAsset('src/app/api/graphql/schema/schema.graphql')
+    tb.copyAsset('src/view/controller.ts')
+    tb.copyAsset('src/view/server.ts')
+    tb.copyAsset('src/view/graphql/schema.ts')
+    tb.copyAsset('src/view/graphql/resolvers.ts')
+    tb.copyAsset('src/view/graphql/resolvers/greeting.resolver.ts')
+    tb.copyAsset('src/view/graphql/schema/schema.graphql')
 
     tb.npm.iDev('mocha')
     tb.npm.iDev('mocha-junit-reporter')
     tb.npm.iDev('mocha-multi-reporters')
     tb.npm.iDev('nyc')
+    tb.npm.iDev('tsx')
     tb.npm.iDev('@types/mocha')
     tb.npm.iDev('@istanbuljs/nyc-config-typescript')
     tb.copySharedAsset('.mocharc.json', tb.destination)
     tb.copySharedAsset('.mocha-junit-config.json', tb.destination)
     tb.packageJson.setType('module')
     tb.packageJson.addNpmScript('test', 'mocha')
+
     tb.packageJson.addNpmScript(
       'ci-test:no-coverage',
       'npm run test -- --parallel=false -R mocha-multi-reporters --reporter-options configFile=.mocha-junit-config.json'

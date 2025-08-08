@@ -1,6 +1,6 @@
 import assert from 'node:assert'
 import { describe, it } from 'mocha'
-import { createAppServer } from '../app/server.js'
+import { createAppServer } from '../view/server.js'
 import { gql } from 'graphql-tag'
 
 describe('Hello world', () => {

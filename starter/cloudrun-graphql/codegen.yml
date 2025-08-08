@@ -1,4 +1,4 @@
-schema: './src/app/api/graphql/schema/schema.graphql'
+schema: './src/view/graphql/schema/schema.graphql'
 overwrite: true
 generates:
   src/generated/graphql.ts:

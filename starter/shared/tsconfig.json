@@ -1,6 +1,9 @@
 {
   "include": ["src/**/*"],
   "exclude": ["dangerfile.ts"],
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
     "target": "ES2021",
     "module": "node16",
