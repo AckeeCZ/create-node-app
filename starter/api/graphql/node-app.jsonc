@@ -1,0 +1,5 @@
+{
+  "module": "API",
+  "name": "GraphQL",
+  "prebuild": ["generate:api"]
+}
