@@ -1,6 +1,0 @@
-"""
-All data queries
-"""
-type Query {
-  greeting: String!
-}
