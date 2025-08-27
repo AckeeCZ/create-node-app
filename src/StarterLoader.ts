@@ -5,6 +5,7 @@ import path from 'node:path'
 export interface StarterConfig {
   module: string
   name: string
+  id: string
   prebuild?: string[]
   replace?: string[]
   merge?: string[]
@@ -41,7 +42,7 @@ export class StarterLoader {
         JSON.parse(fs.readFileSync(configFile, 'utf8'))
       )
 
-      const original = this.starters.get(config.name)
+      const original = this.starters.get(config.id)
       if (original) {
         throw new Error(
           `Duplicate starter: ${config.name}\n` +
@@ -50,7 +51,7 @@ export class StarterLoader {
         )
       }
 
-      this.starters.set(config.name, {
+      this.starters.set(config.id, {
         name: config.name,
         config,
         path: path.dirname(configFile),
@@ -59,12 +60,12 @@ export class StarterLoader {
 
       const module = this.modules.find(module => module.name === config.module)
       if (module) {
-        module.starters.push(config.name)
+        module.starters.push(config.id)
         continue
       }
       this.modules.push({
         name: config.module,
-        starters: [config.name],
+        starters: [config.id],
       })
     }
 
@@ -75,10 +76,10 @@ export class StarterLoader {
     return this.modules
   }
 
-  getStarter(name: string): LoadedStarter {
-    const starter = this.starters.get(name)
+  getStarter(id: string): LoadedStarter {
+    const starter = this.starters.get(id)
     if (!starter) {
-      throw new Error(`Starter ${name} not found`)
+      throw new Error(`Starter ${id} not found`)
     }
     return starter
   }
@@ -89,6 +90,9 @@ export class StarterLoader {
     }
     if (!config.name) {
       throw new Error(`Invalid config at ${path}: name key is required`)
+    }
+    if (!config.id) {
+      throw new Error(`Invalid config at ${path}: id key is required`)
     }
     if (!StarterLoader.isValidOptionalStringArray(config.prebuild)) {
       throw new Error(
@@ -103,7 +107,7 @@ export class StarterLoader {
     }
 
     const invalidKeys = Object.keys(config).filter(
-      key => !['module', 'name', 'prebuild', 'replace', 'merge'].includes(key)
+      key => !['module', 'name', 'prebuild', 'replace', 'id'].includes(key)
     )
     if (invalidKeys.length > 0) {
       throw new Error(

@@ -1,5 +1,6 @@
 {
   "module": "pipeline",
+  "id": "cloudrun-gitlab",
   "name": "CloudRun for GitLab",
   "replace": [".gitlab-ci.yml"]
 }

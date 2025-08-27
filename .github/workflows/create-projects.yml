@@ -17,7 +17,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        create-app-command: ["create-node-app cloudrun", "create-node-app cloudrun-graphql"]
+        create-app-command: 
+         - "create-node-app -f --api rest --database postgres-knex --pipeline cloudrun-gitlab"
+         - "create-node-app -f --api graphql --database postgres-knex --pipeline cloudrun-gitlab"
+         - "create-node-app -f --api rest --database none --pipeline cloudrun-gitlab"
+         - "create-node-app -f --api graphql --database none --pipeline cloudrun-gitlab"
+         - "create-node-app -f --api rest --database none --pipeline none"
+         - "create-node-app -f --api none --database none --pipeline cloudrun-gitlab"
     runs-on: ubuntu-latest
 
     steps:
