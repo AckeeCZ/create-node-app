@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "prettier:check": "prettier --ignore-path .gitignore --check '**/*.{ts,js,json,md}'",
-    "prettier:fix": "npm run prettier:check -- --write '**/*.{ts,js,json,md}'",
+    "prettier:check": "prettier --ignore-path .gitignore --check '**/*.{ts,js,json,jsonc,md}'",
+    "prettier:fix": "npm run prettier:check -- --write '**/*.{ts,js,json,jsonc,md}'",
     "lint:check": "eslint --ignore-path .gitignore 'src/**/*.ts' -f codeframe",
     "lint:fix": "npm run lint:check -- --fix"
   },
