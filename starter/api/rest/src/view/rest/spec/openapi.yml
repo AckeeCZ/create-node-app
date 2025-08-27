@@ -1,0 +1,65 @@
+openapi: '3.0.3'
+info:
+  title: Node App API
+  version: '0.0.1'
+
+paths:
+  /api/v1/healthz:
+    get:
+      operationId: healthz
+      summary: Health check
+      tags:
+        - healthz
+      responses:
+        '200':
+          description: Health check response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+
+components:
+  schemas:
+    HealthCheckResponse:
+      type: object
+      properties:
+        checks:
+          type: array
+          description: List of component health checks
+          items:
+            $ref: '#/components/schemas/HealthCheck'
+        status:
+          type: integer
+          description: Overall status (0=healthy, 1=error)
+          enum: [0, 1]
+      required:
+        - checks
+        - status
+    HealthCheck:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the checked component
+              example: 'postgres'
+            latency:
+              type: integer
+              description: Response time in milliseconds
+              example: 1
+            latencyStatus:
+              type: integer
+              description: Status of the latency check (0=good, 1=error, 2=timeout)
+              enum: [0, 1, 2]
+              example: 0
+            output:
+              type: string
+              description: Additional output information
+              example: '<masked>'
+            required:
+              type: boolean
+              description: Whether this component is required for the system to function
+              example: true
+            status:
+              type: integer
+              description: Status of the component (0=Low, 1=Medium, 2=High)
+              enum: [0, 1, 2]
