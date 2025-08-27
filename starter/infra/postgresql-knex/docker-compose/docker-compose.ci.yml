@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ..
+    image: '$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG'
+    user: root
+    depends_on:
+      - postgres
+    volumes:
+      - '$CI_PROJECT_DIR/docs-output:/usr/src/app/docs-output'
+      - '$CI_PROJECT_DIR/output:/usr/src/app/output'
+      - '$CI_PROJECT_DIR/secrets-test.json:/usr/src/app/secrets-test.json:ro'
+      - '$PWD/docker-compose-entrypoint.sh:/docker-entrypoint.sh:ro'
+    entrypoint: /docker-entrypoint.sh
+    environment:
+      - NODE_PATH=.
+      - ENABLE_TESTS=true
+      - CFG_JSON_PATH=secrets-test.json

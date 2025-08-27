@@ -1,0 +1,5 @@
+{
+  "module": "database",
+  "name": "PostgreSQL with Knex",
+  "replace": ["docker-compose/docker-compose.yml", ".env.jsonc"]
+}
