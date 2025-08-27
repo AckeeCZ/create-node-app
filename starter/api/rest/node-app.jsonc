@@ -1,5 +1,6 @@
 {
   "module": "API",
+  "id": "rest",
   "name": "RESTful",
   "prebuild": ["generate:api"]
 }

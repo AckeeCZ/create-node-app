@@ -13,9 +13,35 @@ import { Path } from './types.js'
 export class Bootstrap {
   protected starterLoader = new StarterLoader()
 
+  private async askMissingOptions(parsedArgs: any) {
+    const starters: LoadedStarter[] = []
+
+    for (const module of this.starterLoader.getOptions()) {
+      const moduleOption = parsedArgs[module.name.toLowerCase()] as string
+      if (moduleOption) {
+        if (moduleOption !== 'none') {
+          starters.push(this.starterLoader.getStarter(moduleOption))
+        }
+        continue
+      }
+
+      const answer = await inquirer.prompt<{ starter: string }>({
+        type: 'list',
+        name: 'starter',
+        message: `Which ${module.name} would you like to use?`,
+        choices: [...module.starters, 'none'],
+      })
+
+      if (answer.starter !== 'none') {
+        starters.push(this.starterLoader.getStarter(answer.starter))
+      }
+    }
+    return starters
+  }
+
   public async runCLI(args: string[]) {
     try {
-      const cli = yargs(hideBin(args))
+      let cli = yargs(hideBin(args))
         .usage('create-node-app [options]')
         .option('dir', {
           type: 'string',
@@ -42,8 +68,27 @@ export class Bootstrap {
           description:
             "Overwrite existing destination directory if it's not empty",
         })
+
+      const starterOptions = this.starterLoader.getOptions()
+      for (const module of starterOptions) {
+        cli = cli.option(module.name.toLowerCase(), {
+          type: 'string',
+          choices: ['none', ...module.starters],
+          description: `Selects ${module.name}`,
+        })
+      }
+
+      cli = cli
         .version('1.0.0')
         .help()
+        .check(argv => {
+          for (const [key, val] of Object.entries(argv)) {
+            if (Array.isArray(val) && key !== '_') {
+              throw new Error(`Option --${key} specified multiple times`)
+            }
+          }
+          return true
+        })
 
       const parsedArgs = cli.parseSync()
 
@@ -52,8 +97,6 @@ export class Bootstrap {
       const logger = new Logger(parsedArgs.debug)
       const npm = new Npm({ dir: destination, logger })
       const packageJson = new PackageJson(npm)
-
-      const starters: LoadedStarter[] = []
 
       if (fs.existsSync(destination) && !parsedArgs.force) {
         const answer = await inquirer.prompt<{ force: boolean }>({
@@ -66,19 +109,7 @@ export class Bootstrap {
         }
       }
 
-      for (const module of this.starterLoader.getOptions()) {
-        const answer = await inquirer.prompt<{ starter: string }>({
-          type: 'list',
-          name: 'starter',
-          message: `Which ${module.name} would you like to use?`,
-          choices: [...module.starters, 'none'],
-        })
-
-        if (answer.starter === 'none') {
-          continue
-        }
-        starters.push(this.starterLoader.getStarter(answer.starter))
-      }
+      const starters = await this.askMissingOptions(parsedArgs)
 
       const builder = new Builder({
         npm,
