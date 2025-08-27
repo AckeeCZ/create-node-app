@@ -6,10 +6,10 @@ import { Npm } from './Npm.js'
 import { PackageJson } from './PackageJson.js'
 import { LoadedStarter, StarterConfig } from './StarterLoader.js'
 import { Merger } from './Mergers/Merger.js'
-// import { PackageJsonMerger } from './Mergers/PackageJsonMerger.js'
-// import { EnvJsoncMerger } from './Mergers/EnvJsoncMerger.js'
-// import { ConfigMerger } from './Mergers/ConfigMerger.js'
-// import { ContainerMerger } from './Mergers/ContainerMerger.js'
+import { PackageJsonMerger } from './Mergers/PackageJsonMerger.js'
+import { EnvJsoncMerger } from './Mergers/EnvJsoncMerger.js'
+import { ConfigMerger } from './Mergers/ConfigMerger.js'
+import { ContainerMerger } from './Mergers/ContainerMerger.js'
 import { Files } from './Files.js'
 
 export class Builder {
@@ -43,10 +43,10 @@ export class Builder {
       '{{PROJECT_NAME}}': this.projectName,
     }
     this.fileMergers = [
-      // new PackageJsonMerger(this.projectName, this.destination, 'package.json'),
-      // new EnvJsoncMerger(this.destination, '.env.jsonc'),
-      // new ConfigMerger(this.destination, 'src/config.ts'),
-      // new ContainerMerger(this.destination, 'src/container.ts'),
+      new PackageJsonMerger(this.projectName, this.destination, 'package.json'),
+      new EnvJsoncMerger(this.destination, '.env.jsonc'),
+      new ConfigMerger(this.destination, 'src/config.ts'),
+      new ContainerMerger(this.destination, 'src/container.ts'),
     ]
   }
 
