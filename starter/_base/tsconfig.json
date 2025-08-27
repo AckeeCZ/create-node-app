@@ -1,0 +1,22 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["dangerfile.ts"],
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "node16",
+    "lib": ["ES2021", "DOM"],
+    "allowJs": true,
+    "incremental": true,
+    "checkJs": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "moduleResolution": "node16",
+    "useUnknownInCatchVariables": false,
+    "esModuleInterop": true
+  }
+}
