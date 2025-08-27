@@ -21,11 +21,19 @@ Run directly from GitHub repo via npx:
 Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app [OPTIONS]
 
 Options:
-  --dir, -d PATH              Specifies directory path for app (default: node-app)
-  --project-name, -n NAME     Google Cloud project name (default: same as directory)
-  --force, -f                 Overwrite existing destination directory if it's not empty
-  --debug -D                  Enables debug logging
-  --help, -h                  Show this help message
+  -d, --dir           Destination directory         [string] [default: "./node-app"]
+  -D, --debug         Enables debug logs                  [boolean] [default: false]
+  -n, --project-name  Google Cloud project name       [string] [default: "node-app"]
+  -f, --force         Overwrite existing destination if it's not empty
+                                                          [boolean] [default: false]
+      --api           Selects API
+                                               [string] [choices: "graphql", "rest"]
+      --database      Selects database as database
+                                                 [string] [choices: "postgres-knex"]
+      --pipeline      Selects pipeline
+                                               [string] [choices: "cloudrun-gitlab"]
+      --version       Show version number                                  [boolean]
+      --help          Show help                                            [boolean]
 ```
 
 ## Setup options
@@ -33,7 +41,7 @@ Options:
 - API layer
   - [RESTful](starter/api/rest/)
   - [GraphQL](starter/api/graphql/)
-- Infrastructure
+- Database
   - [PostgreSQL](starter/infra/postgresql-knex/) using [Knex](https://github.com/knex/knex)
 - Pipelines
   - [GitLab CloudRun](starter/pipeline/cloudrun-gitlab/)
