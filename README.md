@@ -6,34 +6,42 @@
 
 # Create Node App
 
-CLI to help you set up Node.js TypeScript project. Set up project includes
+CLI to help you set up a Node.js TypeScript project. The setup includes:
 
 - code style tools (prettier, lint)
-- testing (using jest)
-- infrastructure files of your choice (Docker, etc.)
-- GitLab CI and npm ci-\* scripts (for Ackee CI/CD pipelines)
+- testing (using mocha)
+- infrastructure files of your choice (PostgreSQL etc.)
+- CI pipeline templates (based on Ackee GitLab CI/CD pipelines)
 
 ## Usage
 
 Run directly from GitHub repo via npx:
 
 ```
-Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app STARTER [OPTIONS] [DIRECTORY]
-
-STARTER        Which template to setup (required)
+Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app [OPTIONS]
 
 Options:
-  --dir, -d DIR       Destination directory (default: ./node-app)
-  --project-name, -n NAME     Google Cloud project name (default: directory basename)
-  --force, -f         Overwrite existing destination directory if it's not empty
-  --help, -h          Show this help message
-
-Starters available:
-    cloudrun            Cloud Run + express
-    cloudrun-graphql    Cloud Run + graphql
+  -d, --dir           Destination directory         [string] [default: "./node-app"]
+  -D, --debug         Enables debug logs                  [boolean] [default: false]
+  -n, --project-name  Google Cloud project name       [string] [default: "node-app"]
+  -f, --force         Overwrite existing destination if it's not empty
+                                                          [boolean] [default: false]
+      --api           Selects API
+                                               [string] [choices: "graphql", "rest"]
+      --database      Selects database as database
+                                                 [string] [choices: "postgres-knex"]
+      --pipeline      Selects pipeline
+                                               [string] [choices: "cloudrun-gitlab"]
+      --version       Show version number                                  [boolean]
+      --help          Show help                                            [boolean]
 ```
 
-Supported starter templates:
+## Setup options
 
-- [Cloud Run](./starter/cloudrun/README.md)
-- [GraphQL Cloud Run](./starter/cloudrun-graphql/README.md)
+- API layer
+  - [RESTful](starter/api/rest/)
+  - [GraphQL](starter/api/graphql/)
+- Database
+  - [PostgreSQL](starter/infra/postgresql-knex/) using [Knex](https://github.com/knex/knex)
+- Pipelines
+  - [GitLab CloudRun](starter/pipeline/cloudrun-gitlab/)

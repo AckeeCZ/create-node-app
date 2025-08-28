@@ -17,48 +17,48 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        create-app-command: ["create-node-app cloudrun", "create-node-app cloudrun-graphql"]
+        create-app-options: 
+         - "--api rest --database none --pipeline cloudrun-gitlab"
+         - "--api graphql --database none --pipeline cloudrun-gitlab"
+         - "--api rest --database none --pipeline none"
+         - "--api none --database none --pipeline cloudrun-gitlab"
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - id: create-node-app
+        uses: ./.github/actions/test-create-project
         with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
-
-      - name: Build the project
-        run: npm run build
-
-      - name: Run npm link
-        run: npm link
-
-      - name: Create project
-        run: ${{ matrix.create-app-command }}
+          options: ${{ matrix.create-app-options }}
       
-      - name: Build created project
-        working-directory: ./node-app
-        run: npm run build
-      
-      - name: Run lint
-        working-directory: ./node-app
-        run: npm run ci-lint
+  create-projects-with-postgres:
+    needs: "build"
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    strategy:
+      fail-fast: false
+      matrix:
+        create-app-options: 
+         - "--api none --database postgres-knex --pipeline none"
+         - "--api rest --database postgres-knex --pipeline cloudrun-gitlab"
+         - "--api graphql --database postgres-knex --pipeline cloudrun-gitlab"
+    runs-on: ubuntu-latest
 
-      - name: Run tests
-        working-directory: ./node-app
-        run: npm run ci-test
-      
-      - name: Run start
-        working-directory: ./node-app
-        run: |
-          npm run start &
-          start_pid=$!
-          sleep 10
-          kill $start_pid
+    steps:
+      - uses: actions/checkout@v4
+      - id: create-node-app
+        uses: ./.github/actions/test-create-project
+        with:
+          options: ${{ matrix.create-app-options }}

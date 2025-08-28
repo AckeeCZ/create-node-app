@@ -1,0 +1,36 @@
+{
+  "name": "app-api-graphql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "generate:api": "graphql-codegen --config codegen.yml && npm run codestyle",
+    "build:copy-schema": "mkdir -p ./dist/view/graphql/schema && cp -r ./src/view/graphql/schema ./dist/view/graphql/schema",
+    "build": "npm run build:copy-schema && tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@as-integrations/express5": "^1.1.2",
+    "@apollo/server": "^4.1.0",
+    "@graphql-tools/load-files": "^7.0.0",
+    "@graphql-tools/merge": "^9.0.0",
+    "@graphql-tools/schema": "^10.0.0",
+    "lodash-es": "^4.17.21",
+    "express": "^5.0.0",
+    "graphql": "^16.0.0",
+    "node-healthz": "^2.0.0",
+    "pino-http": "^10.0.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.0",
+    "@graphql-codegen/typescript-resolvers": "^4.0.0",
+    "@graphql-eslint/eslint-plugin": "^4.4.0",
+    "@types/express": "^5.0.0",
+    "@types/supertest": "^6.0.0",
+    "supertest": "^7.0.0"
+  },
+  "type": "module"
+}
