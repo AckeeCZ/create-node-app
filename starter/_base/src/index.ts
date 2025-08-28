@@ -1,4 +1,3 @@
-import { config } from './config.js'
 import { createContainer } from './container.js'
 import { RequestContext } from './context.js'
 
