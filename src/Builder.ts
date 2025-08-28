@@ -101,7 +101,7 @@ export class Builder {
   }
 
   protected async buildStarter(starterDir: string, config?: StarterConfig) {
-    const destDir = path.normalize(path.join(process.cwd(), this.destination))
+    const destDir = path.normalize(path.resolve(this.destination))
     const files = await glob(`${starterDir}/*`, {
       cwd: starterDir,
       dot: true,
