@@ -1,15 +1,16 @@
-import * as db from './src/app/database'
+import { config } from './src/config.js'
 
 module.exports = {
-  ...db.knexConfig,
+  client: 'pg',
+  connection: config.db.connectionString,
   migrations: {
-    directory: './src/db-migrations',
-    stub: './src/config/db-migration.template.ts',
+    directory: './src/db/migrations',
+    stub: './src/db/migration.template.ts',
     extension: 'ts',
   },
   seeds: {
-    directory: './src/db-seeds',
-    stub: './src/config/db-seed.template.ts',
+    directory: './src/db/seeds',
+    stub: './src/db/seed.template.ts',
     extension: 'ts',
   },
 }
