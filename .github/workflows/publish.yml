@@ -5,11 +5,11 @@ on:
     types: [created]
 
 jobs:
-  create-projects:
-    uses: ./.github/workflows/create-projects.yml
+  build:
+    uses: AckeeCZ/create-node-app/.github/workflows/build.yml@main
 
   publish:
-    needs: create-projects
+    needs: "build"
     runs-on: ubuntu-latest
 
     steps:
