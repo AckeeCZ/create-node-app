@@ -1,0 +1,9 @@
+./src
+.github
+./tsconfig.json
+./tsconfig.tsbuildinfo
+./prettier.config.cjs
+./eslintrc.cjs
+./logo.png
+./AUTHORS
+./package-lock.json
