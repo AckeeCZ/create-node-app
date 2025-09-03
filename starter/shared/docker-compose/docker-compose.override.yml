@@ -1,1 +1,5 @@
-docker-compose.local.yml
+version: '3.8'
+services:
+  postgres:
+    ports:
+      - 5432:5432
