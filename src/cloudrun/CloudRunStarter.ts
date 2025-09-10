@@ -166,6 +166,7 @@ export class CloudRunStarter implements Starter {
     tb.mkdir(tb.stringToPath(`${tb.destination}/src/view/cli/openapi`))
     tb.copyAsset('src/view/cli/openapi/generate.ts')
     tb.npm.iDev('yargs')
+    tb.npm.iDev('@types/yargs')
     tb.npm.iDev('yaml')
     tb.packageJson.addNpmScript('cli', 'tsx ./src/view/cli/cli.ts')
     tb.npm.iDev('openapi-typescript')
