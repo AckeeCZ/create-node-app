@@ -1,6 +1,7 @@
 import glob from 'fast-glob'
 import fs from 'node:fs'
 import path from 'node:path'
+import { Files } from './Files.js'
 
 export interface StarterConfig {
   module: string
@@ -84,26 +85,46 @@ export class StarterLoader {
     return starter
   }
 
-  private static validateConfig(path: string, config: any): StarterConfig {
+  private static validateConfig(
+    configPath: string,
+    config: any
+  ): StarterConfig {
     if (!config.module) {
-      throw new Error(`Invalid config at ${path}: module key is required`)
+      throw new Error(`Invalid config at ${configPath}: module key is required`)
     }
     if (!config.name) {
-      throw new Error(`Invalid config at ${path}: name key is required`)
+      throw new Error(`Invalid config at ${configPath}: name key is required`)
     }
     if (!config.id) {
-      throw new Error(`Invalid config at ${path}: id key is required`)
+      throw new Error(`Invalid config at ${configPath}: id key is required`)
     }
     if (!StarterLoader.isValidOptionalStringArray(config.prebuild)) {
       throw new Error(
-        `Invalid config at ${path}: "prebuild" must be array of npm script names or empty`
+        `Invalid config at ${configPath}: "prebuild" must be array of npm script names or empty`
       )
     }
 
     if (!StarterLoader.isValidOptionalStringArray(config.replace)) {
       throw new Error(
-        `Invalid config at ${path}: "replace" must be array of files where strings should be replaced`
+        `Invalid config at ${configPath}: "replace" must be array of files where strings should be replaced`
       )
+    }
+    if (config.replace) {
+      const configDir = path.dirname(configPath)
+
+      const invalidReplace = config.replace.find((replace: string) => {
+        const replacePath = path.join(configDir, replace)
+        return (
+          !fs.existsSync(replacePath) ||
+          !Files.isInSameTree(configDir, path.join(configDir, replacePath))
+        )
+      })
+
+      if (invalidReplace) {
+        throw new Error(
+          `Invalid config at ${configPath}: "replace" must be array of files in the project directory, got: ${invalidReplace}`
+        )
+      }
     }
 
     const invalidKeys = Object.keys(config).filter(
@@ -111,7 +132,7 @@ export class StarterLoader {
     )
     if (invalidKeys.length > 0) {
       throw new Error(
-        `Invalid config at ${path}: Unknown key(s): ${invalidKeys.join(', ')}`
+        `Invalid config at ${configPath}: Unknown key(s): ${invalidKeys.join(', ')}`
       )
     }
     return config
