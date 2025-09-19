@@ -148,7 +148,7 @@ export class Builder {
 
   public async replaceInFile(filePath: string) {
     filePath = path.normalize(path.join(this.destination, filePath))
-    let content = await fs.readFile(filePath, 'utf8')
+    let content = await Files.readUtf8File(filePath)
     content = Object.keys(this.replacements).reduce((acc, key) => {
       return acc.replaceAll(key, this.replacements[key])
     }, content)

@@ -1,4 +1,3 @@
-import fsp from 'fs/promises'
 import path from 'path'
 import { Files } from '../Files.js'
 
@@ -36,11 +35,11 @@ export abstract class Merger {
     ])
 
     if (!originExists && destExists) {
-      return fsp.readFile(destPath, 'utf8')
+      return Files.readUtf8File(destPath)
     }
 
     if (!destExists && originExists) {
-      return fsp.readFile(originPath, 'utf8')
+      return Files.readUtf8File(originPath)
     }
 
     if (!originExists && !destExists) {

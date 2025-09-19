@@ -1,6 +1,6 @@
 import { Merger } from './Merger.js'
-import fsp from 'fs/promises'
 import * as ts from 'typescript'
+import { Files } from '../Files.js'
 
 export class ContainerMerger extends Merger {
   async merge(originDir: string): Promise<string> {
@@ -12,8 +12,8 @@ export class ContainerMerger extends Merger {
     const { originPath, destPath } = this.getPaths(originDir)
 
     const [originContainer, destContainer] = await Promise.all([
-      fsp.readFile(originPath, 'utf8'),
-      fsp.readFile(destPath, 'utf8'),
+      Files.readUtf8File(originPath),
+      Files.readUtf8File(destPath),
     ])
 
     const originAst = this.parseFile(originContainer)
