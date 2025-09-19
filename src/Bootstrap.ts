@@ -96,7 +96,7 @@ export class Bootstrap {
 
       const logger = new Logger(parsedArgs.debug)
       const npm = new Npm({ dir: destination, logger })
-      const packageJson = new PackageJson(npm)
+      const packageJson = new PackageJson(npm, logger)
 
       if (fs.existsSync(destination) && !parsedArgs.force) {
         const answer = await inquirer.prompt<{ force: boolean }>({

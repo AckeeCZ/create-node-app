@@ -3,17 +3,20 @@ import * as fs from 'fs'
 import * as lodash from 'lodash-es'
 import { Npm } from './Npm.js'
 import { Path } from './types.js'
+import { Logger } from './Logger.js'
 
 export class PackageJson {
   public readonly path: Path
   protected npm: Npm
-  constructor(npm: Npm) {
+  protected logger: Logger
+  constructor(npm: Npm, logger: Logger) {
     let packagejsonPath = './package.json' as Path
     if (npm.dir) {
       packagejsonPath = path.normalize(`${npm.dir}/${packagejsonPath}`) as Path
     }
     this.path = packagejsonPath
     this.npm = npm
+    this.logger = logger
   }
   public setType(type: 'module' | 'commonjs') {
     this.mergeWith({
@@ -36,7 +39,7 @@ export class PackageJson {
   // Updated package json using merge with given object
   public mergeWith(partialWith: any) {
     const json = lodash.merge(this.toJSON(), partialWith)
-    // logger.info(`> package.json updated ${JSON.stringify(partialWith)}`)
+    this.logger.debug(`> package.json updated ${JSON.stringify(partialWith)}`)
     fs.writeFileSync(
       path.join(this.path),
       JSON.stringify(json, null, 2),
