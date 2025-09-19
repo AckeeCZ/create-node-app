@@ -1,4 +1,4 @@
-# Define environments in GitLab UI with vars according to the braches for the pipeline
+# Define environments in GitLab UI with vars according to the branches for the pipeline
 # ENVIRONMENT={{develpoment/stage/production}}
 # GCP_PROJECT_ID={{PROJECT_NAME}}
 # GCP_REGION={{europe-west3}}
