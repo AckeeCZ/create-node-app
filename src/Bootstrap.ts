@@ -10,10 +10,18 @@ import { PackageJson } from './PackageJson.js'
 import { LoadedStarter, StarterLoader } from './StarterLoader.js'
 import { Path } from './types.js'
 
+interface ParsedArgs {
+  dir: string
+  debug: boolean
+  force: boolean
+  projectName: string
+  [key: string]: unknown
+}
+
 export class Bootstrap {
   protected starterLoader = new StarterLoader()
 
-  private async askMissingOptions(parsedArgs: any) {
+  private async askMissingOptions(parsedArgs: ParsedArgs) {
     const starters: LoadedStarter[] = []
 
     for (const module of this.starterLoader.getOptions()) {
