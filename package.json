@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "prettier:check": "prettier --ignore-path .gitignore --check '**/*.{ts,js,json,md}'",
-    "prettier:fix": "npm run prettier:check -- --write '**/*.{ts,js,json,md}'",
+    "prettier:check": "prettier --ignore-path .gitignore --check '**/*.{ts,js,json,jsonc,md}'",
+    "prettier:fix": "npm run prettier:check -- --write '**/*.{ts,js,json,jsonc,md}'",
     "lint:check": "eslint --ignore-path .gitignore 'src/**/*.ts' -f codeframe",
     "lint:fix": "npm run lint:check -- --fix"
   },
@@ -27,14 +27,17 @@
   },
   "homepage": "https://github.com/AckeeCZ/create-node-app#readme",
   "devDependencies": {
-    "@ackee/styleguide-backend-config": "^1.0.0",
+    "@ackee/styleguide-backend-config": "^1.0.1",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.19.0",
     "@types/yargs": "^17.0.33",
-    "prettier": "^2.8.1",
+    "prettier": "^3.0.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "fast-glob": "^3.3.3",
+    "inquirer": "^12.9.0",
+    "ora": "^8.2.0",
     "source-map-support": "^0.5.21",
     "yargs": "^18.0.0",
     "lodash-es": "^4.17.21"

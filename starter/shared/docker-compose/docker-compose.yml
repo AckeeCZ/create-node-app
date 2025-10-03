@@ -1,8 +1,0 @@
-version: '3.8'
-services:
-  postgres:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB={{PROJECT_NAME}}_docker
-      - POSTGRES_USER={{PROJECT_NAME}}_docker
-      - POSTGRES_PASSWORD={{PROJECT_NAME}}_docker
