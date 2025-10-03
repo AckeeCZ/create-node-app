@@ -16,7 +16,7 @@ export class Builder {
   public static readonly BASE_STARTER_DIR = path.normalize(
     path.join(import.meta.dirname, '..', 'starter', '_base')
   )
-  public static readonly INGORED_FILES = ['node-app.jsonc']
+  public static readonly IGNORED_FILES = ['node-app.jsonc']
 
   public readonly npm: Npm
   protected readonly logger: Logger
@@ -108,7 +108,7 @@ export class Builder {
       onlyFiles: false,
     })
 
-    const ignoredFiles = Builder.INGORED_FILES.map(file =>
+    const ignoredFiles = Builder.IGNORED_FILES.map(file =>
       path.join(starterDir, file)
     )
 
