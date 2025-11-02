@@ -87,7 +87,7 @@ export class Bootstrap {
       }
 
       cli = cli
-        .version('1.0.0')
+        .version()
         .help()
         .check(argv => {
           for (const [key, val] of Object.entries(argv)) {
