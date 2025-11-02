@@ -170,7 +170,7 @@ type MimeContentValue<
 type OpenApiContentTypes<OpenApiContent extends Record<number, any>> = {
   [K in keyof OpenApiContent]: OpenApiContent[K] extends Content
     ? MimeContentValue<ApiMimeTypes, OpenApiContent[K]>
-    : never
+    : void
 }[keyof OpenApiContent]
 
 export type OperationParams<OperationId extends OperationIds> =
