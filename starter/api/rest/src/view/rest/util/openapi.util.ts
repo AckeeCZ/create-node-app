@@ -126,11 +126,23 @@ export type ApiHandler<TRes> = (
 ) => TRes | Promise<TRes>
 
 const asyncHandler =
-  <TRes>(fn: ApiHandler<TRes>): express.Handler =>
+  <TRes>(fn: ApiHandler<TRes>, operationId?: OperationIds): express.Handler =>
   async (req, res, next) => {
     try {
       const result = await fn(req.context, req, res)
-      res.json(result)
+
+      if (operationId && !res.headersSent) {
+        const metadata = operationPaths[operationId]
+        if (metadata?.successStatus) {
+          res.status(metadata.successStatus)
+        }
+      }
+
+      if (result !== undefined) {
+        res.json(result)
+      } else {
+        res.end()
+      }
     } catch (error: unknown) {
       next(error)
     }
@@ -200,8 +212,9 @@ export type RestApiController<
 }
 
 const handleOperationAsync = <OperationId extends OperationIds>(
-  fn: OperationHandler<OperationId>
-): OpenApiHandler<OperationId> => asyncHandler(fn as any) as any
+  fn: OperationHandler<OperationId>,
+  operationId: OperationId
+): OpenApiHandler<OperationId> => asyncHandler(fn as any, operationId) as any
 
 const createRestController = <SubsetOperationIds extends OperationIds>(
   def: RouteHandlers<SubsetOperationIds>
@@ -211,7 +224,8 @@ const createRestController = <SubsetOperationIds extends OperationIds>(
       return ctrl
     }
     ctrl[operationId as SubsetOperationIds] = handleOperationAsync(
-      handler as any
+      handler as any,
+      operationId
     ) as any
     return ctrl
   }, {} as RestApiController<SubsetOperationIds>)

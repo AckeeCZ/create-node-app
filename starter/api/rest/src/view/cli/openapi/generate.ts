@@ -33,9 +33,16 @@ export const run = async (argv: any): Promise<void> => {
     const pathSpec = spec.paths[path]
     Object.keys(pathSpec).forEach(method => {
       if (pathSpec[method]?.operationId) {
+        const operationResponses = pathSpec[method].responses ?? {}
+        const successStatus =
+          Object.keys(operationResponses).find(status =>
+            status.startsWith('2')
+          ) ?? '200'
+
         acc[pathSpec[method].operationId] = {
           method,
           path,
+          successStatus: parseInt(successStatus, 10),
         }
       }
     })
