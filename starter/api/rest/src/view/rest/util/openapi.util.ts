@@ -245,6 +245,9 @@ export const openApiRouter = (
       case 'post':
         router.post(route, handler)
         break
+      case 'PUT':
+        router.put(route, handler)
+        break
       case 'patch':
         router.patch(route, handler)
         break

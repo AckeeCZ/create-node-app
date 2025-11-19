@@ -15,10 +15,10 @@ CLI to help you set up a Node.js TypeScript project. The setup includes:
 
 ## Usage
 
-Run directly from GitHub repo via npx:
+Run directly from npm via npx:
 
 ```
-Usage: npm exec --ignore-scripts -- github:AckeeCZ/create-node-app [OPTIONS]
+Usage: npx @ackee/create-node-app [OPTIONS]
 
 Options:
   -d, --dir           Destination directory         [string] [default: "./node-app"]
