@@ -138,7 +138,7 @@ const asyncHandler =
         }
       }
 
-      if (result !== undefined) {
+      if (result != undefined) {
         res.json(result)
       } else {
         res.end()
@@ -225,7 +225,7 @@ const createRestController = <SubsetOperationIds extends OperationIds>(
     }
     ctrl[operationId as SubsetOperationIds] = handleOperationAsync(
       handler as any,
-      operationId
+      operationId as SubsetOperationIds
     ) as any
     return ctrl
   }, {} as RestApiController<SubsetOperationIds>)
