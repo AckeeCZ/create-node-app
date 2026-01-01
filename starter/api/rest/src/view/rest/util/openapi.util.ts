@@ -129,19 +129,21 @@ const asyncHandler =
   <TRes>(fn: ApiHandler<TRes>, operationId?: OperationIds): express.Handler =>
   async (req, res, next) => {
     try {
-      const result = await fn(req.context, req, res)
-
-      if (operationId && !res.headersSent) {
+      if (operationId) {
         const metadata = operationPaths[operationId]
         if (metadata?.successStatus) {
           res.status(metadata.successStatus)
         }
       }
 
-      if (result != undefined) {
-        res.json(result)
-      } else {
-        res.end()
+      const result = await fn(req.context, req, res)
+
+      if (!res.headersSent) {
+        if (result != undefined) {
+          res.json(result)
+        } else {
+          res.end()
+        }
       }
     } catch (error: unknown) {
       next(error)
