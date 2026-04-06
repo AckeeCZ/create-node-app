@@ -11,25 +11,27 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Cache dependencies
-      uses: actions/cache@v3
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: Set up node env
+      uses: actions/setup-node@v4
       with:
-        path: ~/.npm
-        key: npm-${{ hashFiles('package-lock.json') }}
-        restore-keys: npm-
+        node-version: 24
+        cache: pnpm
 
     - name: Install dependencies
-      run: npm ci --ignore-scripts
+      run: pnpm install --frozen-lockfile
       shell: bash
 
     - name: Build the project
-      run: npm run build
+      run: pnpm run build
       shell: bash
 
-    - name: Run npm link
-      run: npm link
+    - name: Run pnpm link
+      run: pnpm link --global
       shell: bash
 
     - name: Create project
@@ -38,17 +40,17 @@ runs:
 
     - name: Build created project
       working-directory: ./node-app
-      run: npm run build
+      run: pnpm run build
       shell: bash
 
     - name: Run lint
       working-directory: ./node-app
-      run: npm run ci-lint
+      run: pnpm run ci-lint
       shell: bash
 
     - name: Run tests
       working-directory: ./node-app
-      run: npm run ci-test
+      run: pnpm run ci-test
       shell: bash
       env:
         DB_CONNECTION_STRING: ${{inputs.dbConnection}}
@@ -57,7 +59,7 @@ runs:
       if: ${{ !contains(inputs.options, '--api none') }}
       working-directory: ./node-app
       run: |
-        npm run start &
+        pnpm run start &
         start_pid=$!
         sleep 10
         kill $start_pid
@@ -69,6 +71,6 @@ runs:
       if: ${{ contains(inputs.options, '--api none') }}
       working-directory: ./node-app
       shell: bash
-      run: npm run start
+      run: pnpm run start
       env:
         DB_CONNECTION_STRING: ${{inputs.dbConnection}}

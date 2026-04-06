@@ -5,7 +5,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { Builder } from './Builder.js'
 import { Logger } from './Logger.js'
-import { Npm } from './Npm.js'
+import { Pnpm } from './Pnpm.js'
 import { PackageJson } from './PackageJson.js'
 import { LoadedStarter, StarterLoader } from './StarterLoader.js'
 import { Path } from './types.js'
@@ -103,8 +103,8 @@ export class Bootstrap {
       const destination = path.normalize(parsedArgs.dir) as Path
 
       const logger = new Logger(parsedArgs.debug)
-      const npm = new Npm({ dir: destination, logger })
-      const packageJson = new PackageJson(npm, logger)
+      const pnpm = new Pnpm({ dir: destination, logger })
+      const packageJson = new PackageJson(pnpm, logger)
 
       if (fs.existsSync(destination) && !parsedArgs.force) {
         const answer = await inquirer.prompt<{ force: boolean }>({
@@ -120,7 +120,7 @@ export class Bootstrap {
       const starters = await this.askMissingOptions(parsedArgs)
 
       const builder = new Builder({
-        npm,
+        pnpm,
         logger,
         packageJson,
         starters,

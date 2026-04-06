@@ -2,17 +2,17 @@ import * as childProcess from 'child_process'
 import { Logger } from './Logger.js'
 import { Path } from './types.js'
 
-export class NpmError extends Error {
+export class PnpmError extends Error {
   constructor(
     message: string,
     public readonly code: number | null
   ) {
     super(message)
-    this.name = 'NpmError'
+    this.name = 'PnpmError'
   }
 }
 
-export class Npm {
+export class Pnpm {
   protected readonly logger: Logger
   public readonly dir: Path
 
@@ -42,7 +42,7 @@ export class Npm {
       cp.on('close', code => {
         if (error.length || (code !== null && code > 0)) {
           reject(
-            new NpmError(
+            new PnpmError(
               error.length ? error.join('') : stdout.join(''),
               code ?? null
             )
@@ -55,7 +55,7 @@ export class Npm {
   }
 
   public run(args: string[]) {
-    this.logger.debug(`> npm ${args.join(' ')}`)
+    this.logger.debug(`> pnpm ${args.join(' ')}`)
     const options: childProcess.SpawnOptions = this.dir
       ? {
           cwd: this.dir,
@@ -63,10 +63,10 @@ export class Npm {
         }
       : { stdio: this.logger.enableDebug ? 'inherit' : 'pipe' }
 
-    return this.spawn('npm', args, options)
+    return this.spawn('pnpm', args, options)
   }
   public init() {
-    return this.run(['init', '--yes'])
+    return this.run(['init'])
   }
 
   public i(module?: string) {
