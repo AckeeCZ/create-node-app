@@ -17,8 +17,8 @@ Application configuration is handled by [Configuru](https://github.com/AckeeCZ/c
 The whole codebase is checked and improved using lint and prettier, run `lint:fix` and `prettier:fix` before committing changes to git.
 
 ```bash
-npm run lint:fix
-npm run prettier:fix
+pnpm lint:fix
+pnpm prettier:fix
 ```
 
 ## ✅ Tests
@@ -35,7 +35,7 @@ If you need any prerequisites during tests, use the [setup.ts](src/test/setup.ts
 To run tests use the test command:
 
 ```bash
-npm run test
+pnpm test
 ```
 
 ## 🚀 Quick start
@@ -43,11 +43,11 @@ npm run test
 1. Build the code
 
 ```bash
-npm run build
+pnpm build
 ```
 
 2. Start the entrypoint / server
 
 ```bash
-npm run start
+pnpm start
 ```

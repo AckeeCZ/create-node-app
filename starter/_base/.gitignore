@@ -3,3 +3,5 @@ dist
 tsconfig.tsbuildinfo
 junit.xml
 coverage
+.pnpm-store
+pnpm-debug.log*

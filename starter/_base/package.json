@@ -6,12 +6,12 @@
     "test": "mocha",
     "build": "tsc",
     "start": "node -r source-map-support/register dist/index.js",
-    "ci-test:no-coverage": "npm run test -- --parallel=false -R mocha-multi-reporters --reporter-options configFile=.mocha-junit-config.json",
-    "ci-test": "nyc -a -r cobertura --report-dir output npm run ci-test:no-coverage",
+    "ci-test:no-coverage": "pnpm test --parallel=false -R mocha-multi-reporters --reporter-options configFile=.mocha-junit-config.json",
+    "ci-test": "nyc -a -r cobertura --report-dir output pnpm run ci-test:no-coverage",
     "prettier": "prettier --check --write '**/*.{ts,js,json,jsonc,md}'",
     "lint": "eslint '**/*.ts' -f codeframe --fix",
-    "codestyle": "npm run lint && npm run prettier",
-    "ci-lint": "npm run lint -- -f checkstyle -o ./output/checkstyle-result.xml",
+    "codestyle": "pnpm lint && pnpm prettier",
+    "ci-lint": "pnpm lint -f checkstyle -o ./output/checkstyle-result.xml",
     "cli": "tsx ./src/view/cli/cli.ts"
   },
   "keywords": [],
@@ -42,5 +42,11 @@
     "typescript": "^5.0.0",
     "yargs": "^18.0.0"
   },
-  "type": "module"
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm"
+    }
+  },
+  "type": "module",
+  "packageManager": "pnpm@10.33.0"
 }
