@@ -48,12 +48,12 @@ include:
   - component: $CI_SERVER_FQDN/Backend/gitlab-components/audit@v1.0.0
     inputs:
       job-stage: test
-      audit-command: npm audit --production --audit-level=high
+      audit-command: pnpm audit --prod --audit-level=high
   # TEST
   - component: $CI_SERVER_FQDN/Backend/gitlab-components/test@v1.0.0
     inputs:
       job-stage: test
-      test-command: DB_CONNECTION_STRING="postgres://node-app_docker:node-app_docker@postgres:5432/postgres" npm run ci-test
+      test-command: DB_CONNECTION_STRING="postgres://node-app_docker:node-app_docker@postgres:5432/postgres" pnpm ci-test
       postgres-user: node-app_docker
       postgres-password: node-app_docker
       postgres-db: postgres

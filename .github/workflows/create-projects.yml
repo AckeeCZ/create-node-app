@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    uses: AckeeCZ/create-node-app/.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
 
   create-projects:
     needs: "build"

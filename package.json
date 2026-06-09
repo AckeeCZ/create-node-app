@@ -7,9 +7,9 @@
   "scripts": {
     "build": "tsc",
     "prettier:check": "prettier --ignore-path .gitignore --check '**/*.{ts,js,json,jsonc,md}'",
-    "prettier:fix": "npm run prettier:check -- --write '**/*.{ts,js,json,jsonc,md}'",
+    "prettier:fix": "pnpm run prettier:check --write '**/*.{ts,js,json,jsonc,md}'",
     "lint:check": "eslint --ignore-path .gitignore 'src/**/*.ts' -f codeframe",
-    "lint:fix": "npm run lint:check -- --fix"
+    "lint:fix": "pnpm run lint:check --fix"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,11 @@
   },
   "engines": {
     "node": ">=20.19.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm"
+    }
   },
   "bin": {
     "create-node-app": "bin/create-node-app.js"
@@ -36,10 +41,11 @@
   "dependencies": {
     "fast-glob": "^3.3.3",
     "inquirer": "^12.9.0",
+    "lodash-es": "^4.17.21",
     "ora": "^8.2.0",
     "source-map-support": "^0.5.21",
-    "yargs": "^18.0.0",
-    "lodash-es": "^4.17.21",
-    "typescript": "^5.4.5"
-  }
+    "typescript": "^5.4.5",
+    "yargs": "^18.0.0"
+  },
+  "packageManager": "pnpm@10.33.0"
 }

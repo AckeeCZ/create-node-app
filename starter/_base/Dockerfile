@@ -1,6 +1,5 @@
 # BUILDER IMAGE
 FROM node:24.5.0 AS builder
-ARG NPM_TOKEN
 ENV NODE_PATH=.
 ENV JOBS="max"
 WORKDIR /usr/src/app
@@ -14,19 +13,19 @@ ENV TINI_VERSION v0.19.0
 RUN wget -q https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -O /tini && \
   chmod +x /tini
 
-# important, otherwise postinstall hook fails
-RUN npm set progress=false
-RUN npm set loglevel=error
+ENV PNPM_VERSION=10.33.0
+RUN curl -fsSL "https://github.com/pnpm/pnpm/releases/download/v${PNPM_VERSION}/pnpm-linux-x64" \
+    -o /usr/local/bin/pnpm && chmod +x /usr/local/bin/pnpm
 # copy all relevant files
 COPY . .
-# RUN echo "//registry.npmjs.org//:_authToken=$NPM_TOKEN" >> .npmrc
 # install dependencies
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 # compile typescript
-RUN npm run build
+RUN pnpm run build
 
 # MAIN IMAGE
 FROM node:24.5.0-slim
+COPY --from=builder /usr/local/bin/pnpm /usr/local/bin/pnpm
 
 ENV NODE_PATH=dist
 ENV CFG_JSON_PATH="/config/secrets.json"

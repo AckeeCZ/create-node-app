@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "generate:api": "graphql-codegen --config codegen.yml && npm run codestyle",
+    "generate:api": "graphql-codegen --config codegen.yml && pnpm run codestyle",
     "build:copy-schema": "mkdir -p ./dist/view/graphql/schema && cp -r ./src/view/graphql/schema ./dist/view/graphql/schema",
-    "build": "npm run build:copy-schema && tsc"
+    "build": "pnpm run build:copy-schema && tsc"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,7 @@
     "@graphql-eslint/eslint-plugin": "^4.4.0",
     "@types/express": "^5.0.0",
     "@types/supertest": "^6.0.0",
+    "graphql-tag": "^2.0.0",
     "supertest": "^7.0.0"
   },
   "type": "module"

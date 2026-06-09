@@ -4,7 +4,7 @@
 .gitlab
 .gitlab-ci.yml
 .huskyrc.json
-.npm
+.pnpm-store
 Dockerfile
 LICENSE
 README.md

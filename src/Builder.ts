@@ -2,7 +2,7 @@ import glob from 'fast-glob'
 import * as fs from 'fs/promises'
 import * as path from 'path'
 import { Logger } from './Logger.js'
-import { Npm } from './Npm.js'
+import { Pnpm } from './Pnpm.js'
 import { PackageJson } from './PackageJson.js'
 import { LoadedStarter, StarterConfig } from './StarterLoader.js'
 import { Merger } from './Mergers/Merger.js'
@@ -18,7 +18,7 @@ export class Builder {
   )
   public static readonly IGNORED_FILES = ['node-app.jsonc']
 
-  public readonly npm: Npm
+  public readonly pnpm: Pnpm
   protected readonly logger: Logger
   protected readonly starters: LoadedStarter[]
   protected readonly fileMergers: Merger[]
@@ -27,14 +27,14 @@ export class Builder {
   protected readonly replacements: Record<string, string>
 
   constructor(params: {
-    npm: Npm
+    pnpm: Pnpm
     logger: Logger
     packageJson: PackageJson
     starters: LoadedStarter[]
     destination: string
     projectName: string
   }) {
-    this.npm = params.npm
+    this.pnpm = params.pnpm
     this.logger = params.logger
     this.starters = params.starters
     this.destination = params.destination
@@ -73,7 +73,7 @@ export class Builder {
         )
       }
 
-      await this.logger.loader(`npm install`, this.npm.run(['install']))
+      await this.logger.loader(`pnpm install`, this.pnpm.run(['install']))
 
       const prebuildScripts: Array<string[]> = this.starters
         .map(starter => starter.config.prebuild)
@@ -81,12 +81,12 @@ export class Builder {
 
       for (const script of prebuildScripts) {
         await this.logger.loader(
-          `npm run ${script.join(' ')}`,
-          this.npm.run(['run', ...script])
+          `pnpm run ${script.join(' ')}`,
+          this.pnpm.run(['run', ...script])
         )
       }
 
-      await this.logger.loader(`npm run build`, this.npm.run(['run', 'build']))
+      await this.logger.loader(`pnpm run build`, this.pnpm.run(['run', 'build']))
 
       this.logger.info(
         `Your app is ready in ${path.relative(

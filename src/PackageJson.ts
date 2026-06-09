@@ -1,21 +1,21 @@
 import * as path from 'path'
 import * as fs from 'fs'
 import * as lodash from 'lodash-es'
-import { Npm } from './Npm.js'
+import { Pnpm } from './Pnpm.js'
 import { Path } from './types.js'
 import { Logger } from './Logger.js'
 
 export class PackageJson {
   public readonly path: Path
-  protected npm: Npm
+  protected pnpm: Pnpm
   protected logger: Logger
-  constructor(npm: Npm, logger: Logger) {
+  constructor(pnpm: Pnpm, logger: Logger) {
     let packagejsonPath = './package.json' as Path
-    if (npm.dir) {
-      packagejsonPath = path.normalize(`${npm.dir}/${packagejsonPath}`) as Path
+    if (pnpm.dir) {
+      packagejsonPath = path.normalize(`${pnpm.dir}/${packagejsonPath}`) as Path
     }
     this.path = packagejsonPath
-    this.npm = npm
+    this.pnpm = pnpm
     this.logger = logger
   }
   public setType(type: 'module' | 'commonjs') {
@@ -27,7 +27,7 @@ export class PackageJson {
     return JSON.parse(fs.readFileSync(this.path, 'utf-8'))
   }
   public runScript(name: string) {
-    return this.npm.run(['run', name])
+    return this.pnpm.run(['run', name])
   }
   public addNpmScript(name: string, command: string) {
     this.mergeWith({

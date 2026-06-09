@@ -16,8 +16,8 @@ export const run = async (argv: any): Promise<void> => {
 
   await new Promise((resolve, reject) => {
     const process = spawn(
-      'npx',
-      ['openapi-typescript', yamlFilePath, '--output', tsFilePath],
+      'pnpm',
+      ['exec', 'openapi-typescript', yamlFilePath, '--output', tsFilePath],
       { stdio: 'inherit' }
     )
     process.on('exit', resolve)
