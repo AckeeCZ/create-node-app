@@ -4,12 +4,12 @@ ENV NODE_PATH=.
 ENV JOBS="max"
 WORKDIR /usr/src/app
 
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION=v0.6.1
 RUN wget -q "https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" && \
   tar -C /usr/local/bin -xzvf "dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" && \
   rm "dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz"
 
-ENV TINI_VERSION v0.19.0
+ENV TINI_VERSION=v0.19.0
 RUN wget -q https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -O /tini && \
   chmod +x /tini
 
