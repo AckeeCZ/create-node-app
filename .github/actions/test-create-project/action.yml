@@ -30,12 +30,8 @@ runs:
       run: pnpm run build
       shell: bash
 
-    - name: Run pnpm link
-      run: pnpm link --global
-      shell: bash
-
     - name: Create project
-      run: create-node-app ${{ inputs.options }}
+      run: node "$GITHUB_WORKSPACE/bin/create-node-app.js" ${{ inputs.options }}
       shell: bash
 
     - name: Build created project

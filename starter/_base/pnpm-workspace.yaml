@@ -1,0 +1,4 @@
+# pnpm does not run dependencies' build scripts unless allowed here.
+allowBuilds:
+  esbuild: true
+  '@apollo/protobufjs': true
