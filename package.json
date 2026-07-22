@@ -47,5 +47,5 @@
     "typescript": "^5.4.5",
     "yargs": "^18.0.0"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@11.15.1"
 }
