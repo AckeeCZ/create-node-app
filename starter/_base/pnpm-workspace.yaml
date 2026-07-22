@@ -1,0 +1,5 @@
+# pnpm blocks dependency build scripts by default (supply-chain hardening).
+# esbuild ships a postinstall that fetches its native binary; it is required
+# by tsx, which runs the CLI / generate:api scripts. Allow it explicitly.
+allowBuilds:
+  esbuild: true
